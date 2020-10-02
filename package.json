@@ -1,0 +1,74 @@
+{
+    "name": "@vertigis/workflow-sdk",
+    "version": "0.0.0-semantically-released",
+    "description": "The SDK for extending Geocortex Workflow",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/geocortex/vertigis-workflow-sdk.git"
+    },
+    "author": "VertiGIS",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/geocortex/vertigis-workflow-sdk/issues"
+    },
+    "homepage": "https://github.com/geocortex/vertigis-workflow-sdk#readme",
+    "files": [
+        "bin",
+        "config",
+        "lib",
+        "scripts",
+        "template"
+    ],
+    "bin": {
+        "vertigis-workflow-sdk": "bin/vertigis-workflow-sdk.js"
+    },
+    "scripts": {
+        "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
+        "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
+        "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
+        "test": "node ./test/index.js"
+    },
+    "dependencies": {
+        "@typescript-eslint/eslint-plugin": "^4.1.1",
+        "@typescript-eslint/parser": "^4.1.1",
+        "autoprefixer": "^10.0.1",
+        "chalk": "^4.1.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^4.3.0",
+        "cssnano": "^4.1.10",
+        "eslint": "^7.9.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-react": "^7.20.6",
+        "eslint-plugin-react-hooks": "^4.1.2",
+        "fs-extra": "^9.0.1",
+        "postcss": "^8.1.1",
+        "postcss-loader": "^4.0.2",
+        "style-loader": "^1.2.1",
+        "terser-webpack-plugin": "^4.2.1",
+        "ts-loader": "^8.0.3",
+        "url-loader": "^4.1.0",
+        "uuid": "^8.3.0",
+        "webpack": "^4.44.1",
+        "webpack-dev-server": "^3.11.0"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.31",
+        "conventional-changelog-conventionalcommits": "^4.4.0",
+        "cross-env": "^7.0.2",
+        "execa": "^4.0.3",
+        "husky": "^4.3.0",
+        "p-retry": "^4.2.0",
+        "playwright-chromium": "1.4.2",
+        "prettier": "^2.1.2",
+        "pretty-quick": "^3.0.2",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "semantic-release": "^17.1.2",
+        "typescript": "^4.0.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    }
+}

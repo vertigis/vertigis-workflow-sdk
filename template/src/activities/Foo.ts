@@ -1,5 +1,3 @@
-import uuid from "../uuid";
-
 /** An interface that defines the inputs of the activity. */
 export interface FooInputs {
     // @displayName Input 1
@@ -25,16 +23,18 @@ export interface FooOutputs {
 export class Foo {
     // The unique identifier of the activity.
     // This value should not be changed once an activity has been published.
-    static action = `uuid:${uuid}::Foo`;
+    static readonly action = "uuid:<generate>::Foo";
 
     // The identifier of the suite of activities that this activity belongs to.
     // This value should not be changed once an activity has been published.
-    static suite = `uuid:${uuid}`;
+    static readonly suite = "uuid:<generate>";
 
     // Perform the execution logic of the activity.
     execute(inputs: FooInputs): FooOutputs {
         return {
-            result: `input1: ${inputs.input1}, input2: ${inputs.input2 || "undefined"}`,
+            result: `input1: ${inputs.input1}, input2: ${
+                inputs.input2 || "undefined"
+            }`,
         };
     }
 }

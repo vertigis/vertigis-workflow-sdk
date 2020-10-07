@@ -30,10 +30,11 @@ const serverConfig = {
     // Allow binding to any host (localhost, jdoe-pc.latitudegeo.com, etc).
     host: "0.0.0.0",
     hot: false,
+    https: true,
     port,
     publicPath: "/",
-    sockPort: process.env.SOCK_PORT || undefined,
     stats: "minimal",
+    sockHost: "localhost",
     watchOptions: {
         // Don't bother watching node_modules files for changes. This reduces
         // CPU/mem overhead, but means that changes from `npm install` while the

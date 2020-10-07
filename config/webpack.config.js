@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const ActivityMetadataWebpackPlugin = require("../lib/ActivityMetadataWebpackPlugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -82,9 +83,6 @@ module.exports = {
                         loader: require.resolve("ts-loader"),
                         options: {
                             context: paths.projRoot,
-                            compilerOptions: {
-                                declarationDir: paths.projBuild,
-                            },
                         },
                     },
                     {
@@ -133,6 +131,8 @@ module.exports = {
         }),
 
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
+
+        new ActivityMetadataWebpackPlugin(),
 
         isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),

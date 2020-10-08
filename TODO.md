@@ -1,1 +1,4 @@
 -   Publish @geocortex/workflow package to npm and install in create script
+-   Consume activities.json in GXWF designer
+-   Handle duplicate file name
+-   HTTPS dev server - any way to improve DX? open browser to bundle?

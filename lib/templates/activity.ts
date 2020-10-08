@@ -23,7 +23,7 @@ export interface FooOutputs {
 export class Foo {
     // The unique identifier of the activity.
     // This value should not be changed once an activity has been published.
-    static readonly action = "uuid:<uuid>::Foo";
+    static readonly action = "uuid:<uuid>::<name>";
 
     // The identifier of the suite of activities that this activity belongs to.
     // This value should not be changed once an activity has been published.

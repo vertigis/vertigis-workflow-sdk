@@ -8,7 +8,7 @@ import {
  * A simple React Component that demonstrates raising events.
  * @param props The props that will be provided by the Workflow runtime.
  */
-const CustomFormElement = (props: CustomFormElementProps) => {
+const Foo = (props: CustomFormElementProps) => {
     const raiseClick = (event) => {
         // Raise the clicked event.
         props.raiseEvent("clicked", new Date());
@@ -44,17 +44,17 @@ const CustomFormElement = (props: CustomFormElementProps) => {
 // @displayName Register <name> Form Element
 // @category Custom Activities
 // @description <description>
-export class RegisterCustomFormElements extends RegisterCustomFormElementBase {
+export class RegisterFooElement extends RegisterCustomFormElementBase {
     // The unique identifier of the activity.
     // This value should not be changed once an activity has been published.
-    static readonly action = "uuid:<generate>::Foo";
+    static readonly action = "uuid:<uuid>::<name>";
 
     // The identifier of the suite of activities that this activity belongs to.
     // This value should not be changed once an activity has been published.
-    static readonly suite = "uuid:<generate>";
+    static readonly suite = "uuid:<uuid>";
 
     // Perform the execution logic of the activity.
     execute() {
-        this.register("<name>", CustomFormElement);
+        this.register("<name>", Foo);
     }
 }

@@ -50,7 +50,7 @@ const updateTemplateContent = (rootPath) => {
 
     for (const fileToUpdate of filesToUpdate) {
         const contents = fs.readFileSync(fileToUpdate, { encoding: "utf8" });
-        const newContents = contents.replace(/<generate>/g, uuid);
+        const newContents = contents.replace(/<uuid>/g, uuid);
         fs.writeFileSync(fileToUpdate, newContents);
     }
 };
@@ -75,6 +75,8 @@ const installNpmDeps = (rootPath) => {
                 "install",
                 "--save-dev",
                 "--save-exact",
+                // TODO: Add package to public registry
+                // "@geocortex/workflow",
                 process.env.SDK_LOCAL_DEV === "true"
                     ? process.cwd()
                     : `@vertigis/workflow-sdk@${selfVersion}`,

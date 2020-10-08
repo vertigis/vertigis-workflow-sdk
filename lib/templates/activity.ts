@@ -17,17 +17,17 @@ export interface FooOutputs {
     result: string;
 }
 
-// @displayName Foo
+// @displayName <name>
 // @category Custom Activities
-// @description A description of the activity.
+// @description <description>
 export class Foo {
     // The unique identifier of the activity.
     // This value should not be changed once an activity has been published.
-    static readonly action = "uuid:<generate>::Foo";
+    static readonly action = "uuid:<uuid>::Foo";
 
     // The identifier of the suite of activities that this activity belongs to.
     // This value should not be changed once an activity has been published.
-    static readonly suite = "uuid:<generate>";
+    static readonly suite = "uuid:<uuid>";
 
     // Perform the execution logic of the activity.
     execute(inputs: FooInputs): FooOutputs {

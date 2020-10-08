@@ -5,11 +5,11 @@
 const args = process.argv.slice(2);
 
 const scriptIndex = args.findIndex(
-    (x) => x === "build" || x === "create" || x === "start"
+    (x) => x === "build" || x === "create" || x === "generate" || x === "start"
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 
-if (["build", "create", "start"].includes(script)) {
+if (["build", "create", "generate", "start"].includes(script)) {
     require(`../scripts/${script}`);
 } else {
     console.log('Unknown script "' + script + '".');

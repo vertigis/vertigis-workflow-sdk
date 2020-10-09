@@ -1,4 +1,8 @@
 -   Publish @geocortex/workflow package to npm and install in create script
+    -   Include the appropriate license
+    -   Tweak the dependencies (@geocortex/licensing)
+    -   Tweak the readme
 -   Consume activities.json in GXWF designer
--   Handle duplicate file name
 -   HTTPS dev server - any way to improve DX? open browser to bundle?
+-   Explain IE11 syntax support (tsconfig target)
+-   Minimum on-prem GXWF version support

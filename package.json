@@ -25,6 +25,7 @@
     "scripts": {
         "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
+        "generate": "cd template && npm link \"../\" --no-package-lock && npm run generate",
         "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js"
     },

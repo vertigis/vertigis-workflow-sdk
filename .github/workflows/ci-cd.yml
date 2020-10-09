@@ -3,11 +3,11 @@ name: CI/CD
 on:
     push:
         branches:
-            - master
+            - main
             - beta
     pull_request:
         branches:
-            - master
+            - main
             - beta
 
 env:
@@ -32,7 +32,7 @@ jobs:
     #     runs-on: ubuntu-latest
     #     needs:
     #         - test
-    #     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta'
+    #     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
     #     steps:
     #         - uses: actions/checkout@v2
     #           with:

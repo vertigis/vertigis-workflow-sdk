@@ -73,7 +73,7 @@ const paths = require("../config/paths");
             .replace(/(<name>|Foo)/g, name)
             .replace(/<description>/g, description);
 
-        indexContent = indexContent += `\nexport * from "./activities/${name}"\n`;
+        indexContent = indexContent += `\nexport * from "./activities/${name};"\n`;
 
         const destFolder = path.join(paths.projSrc, "activities");
         await fs.mkdir(destFolder, { recursive: true });

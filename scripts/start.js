@@ -16,7 +16,7 @@ const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../config/webpack.config");
 
-const port = process.env.PORT || 57999;
+const port = process.env.PORT || 8083;
 
 const compiler = webpack(webpackConfig);
 const serverConfig = {
@@ -27,10 +27,10 @@ const serverConfig = {
     headers: {
         "Access-Control-Allow-Origin": "*",
     },
-    // Allow binding to any host (localhost, jdoe-pc.latitudegeo.com, etc).
-    host: "0.0.0.0",
     hot: false,
     https: true,
+    open: true,
+    openPage: "main.js",
     port,
     publicPath: "/",
     stats: "minimal",

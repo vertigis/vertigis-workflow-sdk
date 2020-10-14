@@ -5,4 +5,5 @@
 -   Consume activities.json in GXWF designer
 -   HTTPS dev server - any way to improve DX? open browser to bundle?
 -   Explain IE11 syntax support (tsconfig target)
--   Minimum on-prem GXWF version support
+-   Document minimum on-prem GXWF version support
+-   npm start errors without activity. Export empty object?

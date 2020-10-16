@@ -1,6 +1,7 @@
 // @ts-check
 "use strict";
 
+const chalk = require("chalk");
 const fs = require("fs").promises;
 const inquirer = require("inquirer");
 const path = require("path");
@@ -12,7 +13,7 @@ const paths = require("../config/paths");
             {
                 type: "list",
                 name: "type",
-                message: "What would you like to create?",
+                message: "What would you like to create",
                 choices: [
                     {
                         name: "Activity",
@@ -28,7 +29,7 @@ const paths = require("../config/paths");
                 type: "input",
                 name: "name",
                 message: function (answers) {
-                    return `What is the ${answers.type} name?`;
+                    return `What is the ${answers.type} name`;
                 },
                 validate: async function (value) {
                     const pass = value.match(/^[A-Z]\w*$/);
@@ -43,7 +44,7 @@ const paths = require("../config/paths");
             {
                 type: "input",
                 name: "description",
-                message: "What is the description?",
+                message: "What is the description",
             },
         ]);
 
@@ -73,7 +74,7 @@ const paths = require("../config/paths");
             .replace(/(<name>|Foo)/g, name)
             .replace(/<description>/g, description);
 
-        indexContent = indexContent += `\nexport * from "./activities/${name};"\n`;
+        indexContent = indexContent += `\nexport * from "./activities/${name}";\n`;
 
         const destFolder = path.join(paths.projSrc, "activities");
         await fs.mkdir(destFolder, { recursive: true });
@@ -87,6 +88,8 @@ const paths = require("../config/paths");
             fs.writeFile(destFile, templateContent, {}),
             fs.writeFile(indexPath, indexContent),
         ]);
+
+        console.log(chalk.green(`Created new activity at ${destFile}`));
     } catch (e) {
         console.error(e);
         process.exit(1);

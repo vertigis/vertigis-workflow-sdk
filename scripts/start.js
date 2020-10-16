@@ -16,7 +16,7 @@ const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../config/webpack.config");
 
-const port = process.env.PORT || 8083;
+const port = process.env.PORT || 5000;
 
 const compiler = webpack(webpackConfig);
 const serverConfig = {
@@ -29,7 +29,9 @@ const serverConfig = {
     },
     hot: false,
     https: true,
-    open: true,
+    open:
+        process.env.SMOKE_TEST !== "true" &&
+        process.env.OPEN_BROWSER !== "false",
     openPage: "main.js",
     port,
     publicPath: "/",

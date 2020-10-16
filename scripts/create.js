@@ -103,6 +103,8 @@ const printSuccess = () => {
         )} Created ${directoryName} at ${directoryPath}\n`
     );
     console.log("Inside that directory, you can run several commands:\n");
+    console.log(chalk.cyan(`  npm run generate`));
+    console.log("    Generate new activities and form elements.\n");
     console.log(chalk.cyan(`  npm start`));
     console.log("    Starts the development server.\n");
     console.log(chalk.cyan(`  npm run build`));

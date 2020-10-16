@@ -49,6 +49,7 @@ function runNpmScript(args, opts) {
 function killSubprocess() {
     if (subprocess && !subprocess.killed) {
         subprocess.kill();
+        subprocess = undefined;
     }
 }
 
@@ -66,6 +67,13 @@ async function testCreateProject() {
         ),
         true,
         "Failed to detect existing directory"
+    );
+
+    const projectUuid = require(path.join(testLibProjPath, "uuid.js"));
+    assert.strictEqual(
+        projectUuid.length,
+        36,
+        "Create project should populate uuid"
     );
 }
 
@@ -93,36 +101,37 @@ async function testStartProject() {
     // The dev server uses a self signed cert which the `https` module won't allow by default.
     const unsafeAgent = new https.Agent({ rejectUnauthorized: false });
 
-    try {
-        await pRetry(
-            async () => {
-                const response = await fetch("https://localhost:5000/main.js", {
-                    agent: unsafeAgent,
-                });
-                const text = await response.text();
-                assert.strictEqual(
-                    text.startsWith("define("),
-                    true,
-                    "main.js should be an AMD module"
-                );
-            },
-            {
-                maxRetryTime: 10000,
-            }
-        );
-    } finally {
-        killSubprocess();
-    }
+    await pRetry(
+        async () => {
+            const response = await fetch("https://localhost:5000/main.js", {
+                agent: unsafeAgent,
+            });
+            const text = await response.text();
+            assert.strictEqual(
+                text.startsWith("define("),
+                true,
+                "main.js should be an AMD module"
+            );
+        },
+        {
+            maxRetryTime: 10000,
+        }
+    );
 }
 
 async function testGenerateActivity() {
-    const stdoutDataCallback = (data) => {
-        const cleanData = data
+    const cleanStdoutData = (data) =>
+        data
             // Remove ansi escape sequences (font styling, etc.)
             .replace(/\[\w+\s*/gi, "")
             // Remove any remaining that aren't printable (ansi control sequences)
             .replace(/[^\w\s\?]/gi, "")
             .trim();
+
+    const projectUuid = require(path.join(testLibProjPath, "uuid.js"));
+
+    const activityStdoutDataCallback = (data) => {
+        const cleanData = cleanStdoutData(data);
 
         // Being asked about what we'd like to create (activity or form element)
         if (cleanData.endsWith("Form Element")) {
@@ -131,41 +140,138 @@ async function testGenerateActivity() {
         } else if (cleanData.endsWith("What is the activity name")) {
             subprocess.stdin.write("FooName\n");
         } else if (cleanData.endsWith("What is the description")) {
-            subprocess.stdin.write("Bar description\n");
+            subprocess.stdin.write("FooName description\n");
         }
     };
 
-    try {
-        subprocess = runNpmScript(["generate"], { cwd: testLibProjPath });
-        subprocess.stdout.on("data", stdoutDataCallback);
+    // Test create activity
+    subprocess = runNpmScript(["generate"], { cwd: testLibProjPath });
+    subprocess.stdout.on("data", activityStdoutDataCallback);
 
-        await pRetry(
-            () => {
+    await pRetry(
+        () => {
+            assert.strictEqual(
+                fs.existsSync(
+                    path.join(testLibProjPath, "src/activities/FooName.ts")
+                ),
+                true,
+                "Generate activity should create activity module"
+            );
+            assert.strictEqual(
+                fs
+                    .readFileSync(
+                        path.join(testLibProjPath, "src/index.ts"),
+                        "utf-8"
+                    )
+                    .includes('export * from "./activities/FooName";'),
+                true,
+                "Generate activity should update index.ts exports"
+            );
+            assert.strictEqual(
+                fs
+                    .readFileSync(
+                        path.join(testLibProjPath, "src/index.ts"),
+                        "utf-8"
+                    )
+                    .includes("export default {};"),
+                false,
+                "Generate activity should remove placeholder export in index.ts"
+            );
+
+            const activityContent = fs.readFileSync(
+                path.join(testLibProjPath, "src/activities/FooName.ts"),
+                "utf-8"
+            );
+
+            const activityContentAssertions = [
+                "export interface FooNameInputs {",
+                "export interface FooNameOutputs {",
+                "// @displayName FooName",
+                "// @description FooName description",
+                "export class FooName {",
+                `static readonly action = "uuid:${projectUuid}::FooName"`,
+                `static readonly suite = "uuid:${projectUuid}"`,
+                "execute(inputs: FooNameInputs): FooNameOutputs {",
+            ];
+
+            for (const assertion of activityContentAssertions) {
                 assert.strictEqual(
-                    fs.existsSync(
-                        path.join(testLibProjPath, "src/activities/FooName.ts")
-                    ),
+                    activityContent.includes(assertion),
                     true,
-                    "Generate activity should create activity module"
+                    `Expected content "${assertion}" in activity`
                 );
-                assert.strictEqual(
-                    fs
-                        .readFileSync(
-                            path.join(testLibProjPath, "src/index.ts"),
-                            "utf-8"
-                        )
-                        .includes('export * from "./activities/FooName";'),
-                    true,
-                    "Generate activity should update index.ts exports"
-                );
-            },
-            {
-                maxRetryTime: 2000,
             }
-        );
-    } finally {
-        subprocess.stdout.off("data", stdoutDataCallback);
-    }
+        },
+        {
+            maxRetryTime: 2000,
+        }
+    );
+
+    const elementStdoutDataCallback = (data) => {
+        const cleanData = cleanStdoutData(data);
+
+        // Being asked about what we'd like to create (activity or form element)
+        if (cleanData.endsWith("Form Element")) {
+            // Down arrow + enter (select form element option)
+            subprocess.stdin.write("\u001b[B\n");
+        } else if (cleanData.endsWith("What is the element name")) {
+            subprocess.stdin.write("BarName\n");
+        } else if (cleanData.endsWith("What is the description")) {
+            subprocess.stdin.write("BarName description\n");
+        }
+    };
+
+    // Test create form element
+    subprocess = runNpmScript(["generate"], { cwd: testLibProjPath });
+    subprocess.stdout.on("data", elementStdoutDataCallback);
+
+    await pRetry(
+        () => {
+            assert.strictEqual(
+                fs.existsSync(
+                    path.join(testLibProjPath, "src/activities/BarName.tsx")
+                ),
+                true,
+                "Generate element should create element module"
+            );
+            assert.strictEqual(
+                fs
+                    .readFileSync(
+                        path.join(testLibProjPath, "src/index.ts"),
+                        "utf-8"
+                    )
+                    .includes('export * from "./activities/BarName";'),
+                true,
+                "Generate element should update index.ts exports"
+            );
+
+            const elementContent = fs.readFileSync(
+                path.join(testLibProjPath, "src/activities/BarName.tsx"),
+                "utf-8"
+            );
+
+            const elementContentAssertions = [
+                "const BarName = (props",
+                "// @displayName Register BarName Form Element",
+                "// @description BarName description",
+                "export class RegisterBarNameElement extends RegisterCustomFormElementBase {",
+                `static readonly action = "uuid:${projectUuid}::BarName"`,
+                `static readonly suite = "uuid:${projectUuid}"`,
+                'this.register("BarName", BarName)',
+            ];
+
+            for (const assertion of elementContentAssertions) {
+                assert.strictEqual(
+                    elementContent.includes(assertion),
+                    true,
+                    `Expected content "${assertion}" in element`
+                );
+            }
+        },
+        {
+            maxRetryTime: 2000,
+        }
+    );
 }
 
 function rmdir(path) {

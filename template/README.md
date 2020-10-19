@@ -1,23 +1,21 @@
-This project was bootstrapped with the [Geocortex Web SDK](https://github.com/geocortex/vertigis-web-sdk).
+This project was bootstrapped with the [Geocortex Workflow SDK](https://github.com/geocortex/vertigis-workflow-sdk). Before you can use your activity pack in the [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/), you will need to [register the activity pack](https://developers.geocortex.com/docs/workflow/sdk-web-overview#register-the-activity-pack).
 
 ## Available Scripts
 
-In the project directory, you can run:
+Inside the newly created project, you can run some built-in commands:
 
 ### `npm start`
 
-Runs the project in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will automatically reload if you make changes to the code. You will see build errors and warnings in the console.
+Runs the project in development mode. Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js).
 
 ### `npm run build`
 
-Builds the library for production to the `build` folder. It optimizes the build for the best performance.
+Builds the activity pack for production to the `build` folder. It optimizes the build for the best performance.
 
-Your custom library is now ready to be deployed!
+Your custom activity pack is now ready to be deployed!
 
-See the [section about deployment](https://developers.geocortex.com/docs/web/sdk-deployment/) in the [Developer Center](https://developers.geocortex.com/docs/web/overview/) for more information.
+See the [section about deployment](https://developers.geocortex.com/docs/workflow/sdk-web-overview/#deployment) in the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/) for more information.
 
-## Learn More
+## Documentation
 
-Find [further documentation on the SDK](https://developers.geocortex.com/docs/web/sdk-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/web/overview/)
+Find [further documentation on the SDK](https://developers.geocortex.com/docs/workflow/sdk-web-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/)

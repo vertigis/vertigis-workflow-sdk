@@ -130,23 +130,42 @@ async function testGenerateActivity() {
 
     const projectUuid = require(path.join(testLibProjPath, "uuid.js"));
 
-    const activityStdoutDataCallback = (data) => {
+    const createDataCallback = (matches) => (data) => {
         const cleanData = cleanStdoutData(data);
 
-        // Being asked about what we'd like to create (activity or form element)
-        if (cleanData.endsWith("Form Element")) {
-            // Hit enter on default selected item (activity)
-            subprocess.stdin.write("\n");
-        } else if (cleanData.endsWith("What is the activity name")) {
-            subprocess.stdin.write("FooName\n");
-        } else if (cleanData.endsWith("What is the description")) {
-            subprocess.stdin.write("FooName description\n");
+        for (const match of matches) {
+            if (!match.matched && cleanData.endsWith(match.endsWith)) {
+                subprocess.stdin.write(match.write);
+                // Because of the nature of inquirer clearing and reprinting
+                // lines in the console, we can receive data events that end
+                // with the same match. Make sure we only write to stdin once.
+                match.matched = true;
+                return;
+            }
         }
     };
 
     // Test create activity
     subprocess = runNpmScript(["generate"], { cwd: testLibProjPath });
-    subprocess.stdout.on("data", activityStdoutDataCallback);
+    subprocess.stdout.on(
+        "data",
+        createDataCallback([
+            // Being asked about what we'd like to create (activity or form element)
+            {
+                endsWith: "Form Element",
+                // Hit enter on default selected item (activity)
+                write: "\n",
+            },
+            {
+                endsWith: "What is the activity name",
+                write: "FooName\n",
+            },
+            {
+                endsWith: "What is the description",
+                write: "FooName description\n",
+            },
+        ])
+    );
 
     await pRetry(
         () => {
@@ -207,23 +226,27 @@ async function testGenerateActivity() {
         }
     );
 
-    const elementStdoutDataCallback = (data) => {
-        const cleanData = cleanStdoutData(data);
-
-        // Being asked about what we'd like to create (activity or form element)
-        if (cleanData.endsWith("Form Element")) {
-            // Down arrow + enter (select form element option)
-            subprocess.stdin.write("\u001b[B\n");
-        } else if (cleanData.endsWith("What is the element name")) {
-            subprocess.stdin.write("BarName\n");
-        } else if (cleanData.endsWith("What is the description")) {
-            subprocess.stdin.write("BarName description\n");
-        }
-    };
-
     // Test create form element
     subprocess = runNpmScript(["generate"], { cwd: testLibProjPath });
-    subprocess.stdout.on("data", elementStdoutDataCallback);
+    subprocess.stdout.on(
+        "data",
+        createDataCallback([
+            // Being asked about what we'd like to create (activity or form element)
+            {
+                endsWith: "Form Element",
+                // Down arrow + enter (select form element option)
+                write: "\u001b[B\n",
+            },
+            {
+                endsWith: "What is the element name",
+                write: "BarName\n",
+            },
+            {
+                endsWith: "What is the description",
+                write: "BarName description\n",
+            },
+        ])
+    );
 
     await pRetry(
         () => {

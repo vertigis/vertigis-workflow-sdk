@@ -23,7 +23,6 @@ const serverConfig = {
     clientLogLevel: "silent",
     compress: true,
     contentBase: false,
-    disableHostCheck: true,
     headers: {
         "Access-Control-Allow-Origin": "*",
     },

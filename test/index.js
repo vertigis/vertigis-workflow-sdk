@@ -297,6 +297,26 @@ async function testGenerateActivity() {
     );
 }
 
+function testActivityPackMetadataGeneration() {
+    const metadataPath = path.join(testLibProjPath, "build/activitypack.json");
+
+    assert.strictEqual(
+        fs.existsSync(metadataPath),
+        true,
+        "build/activitypack.json"
+    );
+
+    const metadata = require(metadataPath);
+
+    assert.strictEqual(
+        metadata.activities.length,
+        2,
+        "expected 2 items in pack metadata"
+    );
+
+    // TODO: Improve tests to check some of the specifics of the metadata
+}
+
 function rmdir(path) {
     fs.rmdirSync(path, { recursive: true });
 }
@@ -316,6 +336,7 @@ function cleanup() {
         await testGenerateActivity();
         // Test build again now that we've generated activities
         await testBuildProject();
+        await testActivityPackMetadataGeneration();
         await testStartProject();
         console.log("\n\nAll tests passed!\n");
         cleanup();

@@ -6,6 +6,7 @@ This SDK makes it easy to create custom activity packs for [Geocortex Workflow](
 
 ## Requirements
 
+-   Geocortex Workflow 5.18 or later if running on-premises
 -   The latest LTS version of [Node.js](https://nodejs.org/en/download/)
 -   A code editor of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/)
 

@@ -1,3 +1,1 @@
--   Publish @geocortex/workflow package to npm and install in create script
--   HTTPS dev server - any way to improve DX? open browser to bundle?
 -   Explain IE11 syntax support (tsconfig target)

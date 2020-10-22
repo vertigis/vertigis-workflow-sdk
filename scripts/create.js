@@ -75,8 +75,7 @@ const installNpmDeps = (rootPath) => {
                 "install",
                 "--save-dev",
                 "--save-exact",
-                // TODO: Add package to public registry
-                // "@geocortex/workflow",
+                "@geocortex/workflow",
                 process.env.SDK_LOCAL_DEV === "true"
                     ? process.cwd()
                     : `@vertigis/workflow-sdk@${selfVersion}`,

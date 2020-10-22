@@ -108,7 +108,7 @@ async function testStartProject() {
             });
             const text = await response.text();
             assert.strictEqual(
-                text.startsWith("define("),
+                text.includes("define("),
                 true,
                 "main.js should be an AMD module"
             );

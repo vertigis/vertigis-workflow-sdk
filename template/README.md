@@ -4,6 +4,10 @@ This project was bootstrapped with the [Geocortex Workflow SDK](https://github.c
 
 Inside the newly created project, you can run some built-in commands:
 
+### `npm run generate`
+
+Interactively generate a new activity or form element.
+
 ### `npm start`
 
 Runs the project in development mode. Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js).

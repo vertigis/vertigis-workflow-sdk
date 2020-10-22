@@ -27,18 +27,14 @@ const build = () => {
                 return reject(err);
             }
 
+            console.log(chalk.supportsColor);
+
             console.log(
                 stats.toString({
-                    // TODO: Use "preset" property instead when webpack 5 is released.
-                    // Copied from `minimal` preset.
-                    all: false,
-                    modules: true,
-                    maxModules: 0,
-                    errors: true,
-                    warnings: true,
-
-                    // Add in assets output to see chunk size.
-                    assets: true,
+                    preset: "normal",
+                    colors: chalk.supportsColor
+                        ? chalk.supportsColor.hasBasic
+                        : false,
                 })
             );
 

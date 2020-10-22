@@ -51,11 +51,15 @@ const paths = require("../config/paths");
         const { name, description, type } = answers;
 
         let templateName;
+        const destFolder = path.join(paths.projSrc, "activities");
+        let destFilename;
 
         if (type === "activity") {
             templateName = "activity.ts";
+            destFilename = `${name}.ts`;
         } else {
             templateName = "element.tsx";
+            destFilename = `${name}.tsx`;
         }
 
         const projUuid = require(path.join(paths.projRoot, "uuid"));
@@ -78,13 +82,9 @@ const paths = require("../config/paths");
         indexContent = indexContent.replace("\nexport default {};\n", "");
         indexContent += `\nexport * from "./activities/${name}";\n`;
 
-        const destFolder = path.join(paths.projSrc, "activities");
         await fs.mkdir(destFolder, { recursive: true });
 
-        const destFile = path.join(
-            destFolder,
-            `${name}.${type === "element" ? "tsx" : "ts"}`
-        );
+        const destFile = path.join(destFolder, destFilename);
 
         await Promise.all([
             fs.writeFile(destFile, templateContent, {}),

@@ -30,7 +30,7 @@ Interactively generate a new activity or form element.
 
 ### `npm start`
 
-Runs the project in development mode. Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js). The HTTPS certificate of the development server is a self-signed certificate that web browsers will warn about. To work around this open [`https://localhost:5000/main.js`](https://localhost:5000/main.js) in a web browser and allow the invalid certificate as an exception. For creating a locally-trusted HTTPS certificate see the [Configuring a HTTPS Certificate](#configuring-a-https-certificate) section.
+Runs the project in development mode. Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js). The HTTPS certificate of the development server is a self-signed certificate that web browsers will warn about. To work around this open [`https://localhost:5000/main.js`](https://localhost:5000/main.js) in a web browser and allow the invalid certificate as an exception. For creating a locally-trusted HTTPS certificate see the [Configuring a HTTPS Certificate](https://developers.geocortex.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate) section on the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/).
 
 ### `npm run build`
 
@@ -61,20 +61,17 @@ Created a new certificate valid for the following names 📜
 The certificate is at "./localhost+2.pem" and the key at "./localhost+2-key.pem" ✅
 ```
 
-Once you've created your locally-trusted development certificate you can provide the paths to the `cert`, `key`, and `ca` files:
+Once you've created your locally-trusted development certificate you can provide the paths to the `cert` and `key` files:
 
 ```sh
-$ npm start -- \
---key "/Users/ian/Library/Application Support/mkcert/localhost+2-key.pem" \
---cert "/Users/ian/Library/Application Support/mkcert/localhost+2.pem" \
---ca "/Users/ian/Library/Application Support/mkcert/rootCA.pem"
+$ npm start -- --cert "./localhost+2.pem" --key "./localhost+2-key.pem"
 ```
 
 Note the extra `--` used in the `npm start` script is necessary to forward the arguments to the development server process.
 
 ## Documentation
 
-Find [further documentation on the SDK](https://developers.geocortex.com/docs/workflow/sdk-web-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/)
+Find [further documentation on the SDK](https://developers.geocortex.com/docs/workflow/sdk-web-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/).
 
 ## Contributing
 

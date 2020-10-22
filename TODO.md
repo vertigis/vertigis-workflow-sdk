@@ -1,1 +1,3 @@
+-   Check if main() can be called multiple times
 -   Explain IE11 syntax support (tsconfig target)
+-   Support chunking? https://stackoverflow.com/questions/42190544/how-can-i-configure-webpacks-automatic-code-splitting-to-load-modules-relative

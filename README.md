@@ -40,35 +40,6 @@ Your custom activity pack is now ready to be deployed!
 
 See the [section about deployment](https://developers.geocortex.com/docs/workflow/sdk-web-overview/#deployment) in the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/) for more information.
 
-## Configuring a HTTPS Certificate
-
-You can create a locally-trusted development certificate that is trusted by your system using the [mkcert](https://github.com/FiloSottile/mkcert) utility. Once installed you can run:
-
-```sh
-$ mkcert -install
-Created a new local CA at "/Users/ian/Library/Application Support/mkcert" 💥
-The local CA is now installed in the system trust store! ⚡️
-The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
-
-$ mkcert localhost 127.0.0.1 ::1
-Using the local CA at "/Users/ian/Library/Application Support/mkcert" ✨
-
-Created a new certificate valid for the following names 📜
- - "localhost"
- - "127.0.0.1"
- - "::1"
-
-The certificate is at "./localhost+2.pem" and the key at "./localhost+2-key.pem" ✅
-```
-
-Once you've created your locally-trusted development certificate you can provide the paths to the `cert` and `key` files:
-
-```sh
-$ npm start -- --cert "./localhost+2.pem" --key "./localhost+2-key.pem"
-```
-
-Note the extra `--` used in the `npm start` script is necessary to forward the arguments to the development server process.
-
 ## Documentation
 
 Find [further documentation on the SDK](https://developers.geocortex.com/docs/workflow/sdk-web-overview/) on the [Geocortex Developer Center](https://developers.geocortex.com/docs/workflow/overview/).

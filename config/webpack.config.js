@@ -6,7 +6,6 @@ const webpack = require("webpack");
 
 const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const ActivityMetadataWebpackPlugin = require("../lib/ActivityMetadataWebpackPlugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
@@ -20,7 +19,7 @@ const libId = require("crypto").randomBytes(8).toString("hex");
 module.exports = {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
-    devtool: isEnvProduction ? false : "cheap-module-eval-source-map",
+    devtool: isEnvProduction ? false : "eval-source-map",
     // Disable perf hints as it's mostly out of the developer's control as we
     // only allow one chunk.
     performance: false,
@@ -28,6 +27,8 @@ module.exports = {
     resolve: {
         extensions: paths.moduleFileExtensions,
     },
+    // Remove this to reduce bundle size when we drop IE11 support.
+    target: ["web", "es5"],
     entry: paths.projEntry,
     externals: [
         /^dojo\/.+$/,
@@ -41,22 +42,13 @@ module.exports = {
         // Technically this shouldn't be needed as we restrict the library to
         // one chunk, but we set this here just to be extra safe against
         // collisions.
-        jsonpFunction: libId,
+        chunkLoadingGlobal: libId,
         libraryTarget: "amd",
         publicPath: "/",
         path: paths.projBuild,
-        // TODO: remove this when upgrading to webpack 5
-        futureEmitAssets: true,
         // There will be one main bundle, and one file per asynchronous chunk.
         // In development, it does not produce real files.
         filename: "[name].js",
-    },
-    optimization: {
-        // This is only used in production mode
-        minimizer: [
-            // Minify JS output
-            new TerserPlugin(),
-        ],
     },
     module: {
         strictExportPresence: true,
@@ -136,12 +128,4 @@ module.exports = {
 
         isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),
-    node: {
-        dgram: "empty",
-        fs: "empty",
-        net: "empty",
-        tls: "empty",
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        child_process: "empty",
-    },
 };

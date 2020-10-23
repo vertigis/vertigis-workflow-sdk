@@ -23,10 +23,7 @@
         "vertigis-workflow-sdk": "bin/vertigis-workflow-sdk.js"
     },
     "scripts": {
-        "build": "cd template && npm link \"../\" --no-package-lock && npm run build",
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
-        "generate": "cd template && npm link \"../\" --no-package-lock && npm run generate",
-        "start": "cd template && npm link \"../\" --no-package-lock && npm run start",
         "test": "node ./test/index.js"
     },
     "dependencies": {
@@ -51,7 +48,8 @@
         "url-loader": "^4.1.0",
         "uuid": "^8.3.0",
         "webpack": "^5.2.0",
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "^3.11.0",
+        "yargs": "^16.1.0"
     },
     "devDependencies": {
         "@geocortex/workflow": "^5.17.1",

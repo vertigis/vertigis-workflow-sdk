@@ -15,6 +15,10 @@ process.on("unhandledRejection", (err) => {
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../config/webpack.config");
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers");
+
+const argv = yargs(hideBin(process.argv)).argv;
 
 const port = process.env.PORT || 5000;
 
@@ -28,6 +32,9 @@ const serverConfig = {
     },
     hot: false,
     https: true,
+    key: argv.key,
+    cert: argv.cert,
+    ca: argv.ca,
     open:
         process.env.SMOKE_TEST !== "true" &&
         process.env.OPEN_BROWSER !== "false",

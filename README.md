@@ -12,10 +12,10 @@ This SDK makes it easy to create custom activity packs for [Geocortex Workflow](
 
 ## Creating a new project
 
-To create a project called _workflow-library_ run this command:
+To create a project called _activity-pack_ run this command:
 
 ```sh
-npx @vertigis/workflow-sdk create workflow-library
+npx @vertigis/workflow-sdk create activity-pack
 ```
 
 This will bootstrap a new project in the specified directory to quickly get you up and running with the Geocortex Workflow SDK. Before you can use your activity pack in the [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/), you will need to [register the activity pack](https://developers.geocortex.com/docs/workflow/sdk-web-overview#register-the-activity-pack).

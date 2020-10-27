@@ -17,7 +17,31 @@ const checkSpawnSyncResult = (syncResult) => {
     }
 };
 
-const copyTemplate = (rootPath) => {
+const checkDirectoryPath = (rootPath) => {
+    if (!/^[\w-]+$/.test(path.basename(rootPath))) {
+        console.error(
+            chalk.red(
+                `Cannot create new project at ${chalk.green(
+                    rootPath
+                )} as the directory name is not valid. Letters, numbers, dashes and underscores are allowed.\n`
+            )
+        );
+        process.exit(1);
+    }
+
+    // Exclamation points are not permitted in the path as it's reserved for
+    // webpack loader syntax.
+    if (/[!]/.test(rootPath)) {
+        console.error(
+            chalk.red(
+                `Cannot create new project at ${chalk.green(
+                    rootPath
+                )} as the path is not valid. Exclamation points (!) are not allowed in the file system path.\n`
+            )
+        );
+        process.exit(1);
+    }
+
     if (fs.existsSync(rootPath) && fs.readdirSync(rootPath).length > 0) {
         console.error(
             chalk.red(
@@ -28,7 +52,9 @@ const copyTemplate = (rootPath) => {
         );
         process.exit(1);
     }
+};
 
+const copyTemplate = (rootPath) => {
     console.log(`Creating new project at ${chalk.green(rootPath)}`);
 
     fs.copySync(path.join(rootDir, "template"), rootPath, {
@@ -116,6 +142,7 @@ const printSuccess = () => {
     );
 };
 
+checkDirectoryPath(directoryPath);
 copyTemplate(directoryPath);
 updateTemplateContent(directoryPath);
 installNpmDeps(directoryPath);

@@ -1,4 +1,2 @@
 -   Explain IE11 syntax support (tsconfig target, browserslist)
 -   Support chunking? https://stackoverflow.com/questions/42190544/how-can-i-configure-webpacks-automatic-code-splitting-to-load-modules-relative
--   Improve state management docs in dev center
--   Fix react-color demo (state)

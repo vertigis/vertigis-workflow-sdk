@@ -1,4 +1,5 @@
 {
     "extends": "@vertigis/workflow-sdk/config/tsconfig.json",
+    "compilerOptions": {},
     "include": ["src"]
 }

@@ -98,15 +98,9 @@ module.exports = {
                                 // package.json
                                 loader: require.resolve("postcss-loader"),
                                 options: {
-                                    ident: "postcss",
-                                    plugins: () =>
-                                        [
-                                            autoprefixer({
-                                                flexbox: "no-2009",
-                                            }),
-                                            isEnvProduction &&
-                                                require("cssnano")(),
-                                        ].filter(Boolean),
+                                    postcssOptions: {
+                                        plugins: ["postcss-preset-env"],
+                                    },
                                 },
                             },
                         ],

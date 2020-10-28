@@ -27,8 +27,6 @@ const build = () => {
                 return reject(err);
             }
 
-            console.log(chalk.supportsColor);
-
             console.log(
                 stats.toString({
                     preset: "normal",

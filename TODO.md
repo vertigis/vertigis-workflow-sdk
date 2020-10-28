@@ -1,2 +1,3 @@
 -   Explain IE11 syntax support (tsconfig target, browserslist)
 -   Support chunking? https://stackoverflow.com/questions/42190544/how-can-i-configure-webpacks-automatic-code-splitting-to-load-modules-relative
+-   Document CSS file support

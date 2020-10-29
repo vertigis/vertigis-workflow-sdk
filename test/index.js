@@ -21,6 +21,10 @@ process.env.SMOKE_TEST = "true";
 /** @type {execa.ExecaChildProcess<string>} */
 let subprocess;
 
+function getProjectUuid() {
+    return require(path.join(testLibProjPath, "uuid"));
+}
+
 /**
  * @param {Array<string>} args
  * @param {execa.Options<string>} [opts]
@@ -69,7 +73,7 @@ async function testCreateProject() {
         "Failed to detect existing directory"
     );
 
-    const projectUuid = require(path.join(testLibProjPath, "uuid.js"));
+    const projectUuid = getProjectUuid();
     assert.strictEqual(
         projectUuid.length,
         36,
@@ -127,8 +131,6 @@ async function testGenerateActivity() {
             // Remove any remaining that aren't printable (ansi control sequences)
             .replace(/[^\w\s\?]/gi, "")
             .trim();
-
-    const projectUuid = require(path.join(testLibProjPath, "uuid.js"));
 
     const createDataCallback = (matches) => (data) => {
         const cleanData = cleanStdoutData(data);
@@ -302,15 +304,14 @@ function testActivityPackMetadataGeneration() {
         "build/activitypack.json"
     );
 
+    const projectUuid = getProjectUuid();
     const metadata = require(metadataPath);
 
     assert.strictEqual(
-        metadata.activities.length,
-        2,
-        "expected 2 items in pack metadata"
+        JSON.stringify(metadata),
+        `{"activities":[{"action":"uuid:${projectUuid}::RegisterBarNameElement","suite":"uuid:${projectUuid}","displayName":"Register BarName Form Element","description":"BarName description","category":"Custom Activities","tags":{},"inputs":{},"outputs":{}},{"action":"uuid:${projectUuid}::FooName","suite":"uuid:${projectUuid}","displayName":"FooName","description":"FooName description","category":"Custom Activities","tags":{},"inputs":{"input1":{"name":"input1","displayName":"Input 1","description":"The first input to the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":true,"noExpressions":false},"input2":{"name":"input2","displayName":"Input 2","description":"The second input to the activity.","placeholder":"","typeName":"number","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}},"outputs":{"result":{"name":"result","displayName":"Result","description":"The result of the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}}}]}`,
+        "expected activity metadata output to match"
     );
-
-    // TODO: Improve tests to check some of the specifics of the metadata
 }
 
 function rmdir(path) {

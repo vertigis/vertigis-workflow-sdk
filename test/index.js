@@ -207,9 +207,7 @@ async function testGenerateActivity() {
                 "export interface FooNameOutputs {",
                 "// @displayName FooName",
                 "// @description FooName description",
-                "export class FooName {",
-                `static readonly action = "uuid:${projectUuid}::FooName"`,
-                `static readonly suite = "uuid:${projectUuid}"`,
+                "export class FooName implements IActivityHandler {",
                 "execute(inputs: FooNameInputs): FooNameOutputs {",
             ];
 
@@ -278,8 +276,6 @@ async function testGenerateActivity() {
                 "// @displayName Register BarName Form Element",
                 "// @description BarName description",
                 "export class RegisterBarNameElement extends RegisterCustomFormElementBase {",
-                `static readonly action = "uuid:${projectUuid}::BarName"`,
-                `static readonly suite = "uuid:${projectUuid}"`,
                 'this.register("BarName", BarName)',
             ];
 

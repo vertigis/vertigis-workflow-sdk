@@ -1,8 +1,6 @@
 import * as React from "react";
-import {
-    CustomFormElementProps,
-    RegisterCustomFormElementBase,
-} from "@geocortex/workflow/runtime/app/RegisterCustomFormElementBase";
+import type { CustomFormElementProps } from "@geocortex/workflow/runtime/app/RegisterCustomFormElementBase";
+import { RegisterCustomFormElementBase } from "@geocortex/workflow/runtime/app/RegisterCustomFormElementBase";
 
 /**
  * A simple React Component that demonstrates raising events.
@@ -45,14 +43,6 @@ const Foo = (props: CustomFormElementProps) => {
 // @category Custom Activities
 // @description <description>
 export class RegisterFooElement extends RegisterCustomFormElementBase {
-    // The unique identifier of the activity.
-    // This value should not be changed once an activity has been published.
-    static readonly action = "uuid:<uuid>::<name>";
-
-    // The identifier of the suite of activities that this activity belongs to.
-    // This value should not be changed once an activity has been published.
-    static readonly suite = "uuid:<uuid>";
-
     // Perform the execution logic of the activity.
     execute() {
         this.register("<name>", Foo);

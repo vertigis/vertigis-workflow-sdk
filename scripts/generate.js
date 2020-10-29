@@ -62,7 +62,6 @@ const paths = require("../config/paths");
             destFilename = `${name}.tsx`;
         }
 
-        const projUuid = require(path.join(paths.projRoot, "uuid"));
         const indexPath = path.join(paths.projSrc, "index.ts");
 
         let [templateContent, indexContent] = await Promise.all([
@@ -74,7 +73,6 @@ const paths = require("../config/paths");
         ]);
 
         templateContent = templateContent
-            .replace(/<uuid>/g, projUuid)
             .replace(/(<name>|Foo)/g, name)
             .replace(/<description>/g, description);
 

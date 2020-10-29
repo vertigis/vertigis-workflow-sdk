@@ -81,7 +81,7 @@ const build = () => {
         await build();
     } catch (e) {
         if (e && e.message) {
-            console.error(e.message);
+            console.error(e);
         }
         process.exit(1);
     }

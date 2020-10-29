@@ -4,9 +4,8 @@
 const paths = require("./paths");
 const webpack = require("webpack");
 
-const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ActivityMetadataWebpackPlugin = require("../lib/ActivityMetadataWebpackPlugin");
+const GenerateActivityMetadataPlugin = require("../lib/GenerateActivityMetadataPlugin");
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -54,8 +53,7 @@ module.exports = {
         rules: [
             {
                 // "oneOf" will traverse all following loaders until one will
-                // match the requirements. When no loader matches it will fall
-                // back to the "file" loader at the end of the loader list.
+                // match the requirements.
                 oneOf: [
                     // Embeds assets smaller than the specified limit (Infinity
                     // in our case) as data URLs.
@@ -107,6 +105,11 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(js|jsx|ts|tsx)$/i,
+                include: paths.projSrc,
+                loader: require.resolve("../lib/activityLoader"),
+            },
         ],
     },
     plugins: [
@@ -117,7 +120,7 @@ module.exports = {
 
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
 
-        new ActivityMetadataWebpackPlugin(),
+        new GenerateActivityMetadataPlugin(),
 
         isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),

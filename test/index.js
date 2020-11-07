@@ -207,8 +207,8 @@ async function testGenerateActivity() {
             const activityContentAssertions = [
                 "export interface FooNameInputs {",
                 "export interface FooNameOutputs {",
-                "// @displayName FooName",
-                "// @description FooName description",
+                "* @displayName FooName",
+                "* @description FooName description",
                 "export class FooName implements IActivityHandler {",
                 "execute(inputs: FooNameInputs): FooNameOutputs {",
             ];
@@ -275,8 +275,8 @@ async function testGenerateActivity() {
 
             const elementContentAssertions = [
                 "const BarName = (props",
-                "// @displayName Register BarName Form Element",
-                "// @description BarName description",
+                "* @displayName Register BarName Form Element",
+                "* @description BarName description",
                 "export class RegisterBarNameElement extends RegisterCustomFormElementBase {",
                 'this.register("BarName", BarName)',
             ];
@@ -307,10 +307,11 @@ function testActivityPackMetadataGeneration() {
     const projectUuid = getProjectUuid();
     const metadata = require(metadataPath);
 
-    assert.strictEqual(
-        JSON.stringify(metadata),
-        `{"activities":[{"action":"uuid:${projectUuid}::RegisterBarNameElement","suite":"uuid:${projectUuid}","displayName":"Register BarName Form Element","description":"BarName description","category":"Custom Activities","tags":{},"inputs":{},"outputs":{}},{"action":"uuid:${projectUuid}::FooName","suite":"uuid:${projectUuid}","displayName":"FooName","description":"FooName description","category":"Custom Activities","tags":{},"inputs":{"input1":{"name":"input1","displayName":"Input 1","description":"The first input to the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":true,"noExpressions":false},"input2":{"name":"input2","displayName":"Input 2","description":"The second input to the activity.","placeholder":"","typeName":"number","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}},"outputs":{"result":{"name":"result","displayName":"Result","description":"The result of the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}}}]}`,
-        "expected activity metadata output to match"
+    assert.deepStrictEqual(
+        metadata,
+        JSON.parse(
+            `{"activities":[{"action":"uuid:${projectUuid}::RegisterBarNameElement","suite":"uuid:${projectUuid}","displayName":"Register BarName Form Element","description":"BarName description","category":"Custom Activities","tags":{},"inputs":{},"outputs":{}},{"action":"uuid:${projectUuid}::FooName","suite":"uuid:${projectUuid}","displayName":"FooName","description":"FooName description","category":"Custom Activities","tags":{},"inputs":{"input1":{"name":"input1","displayName":"Input 1","description":"The first input to the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":true,"noExpressions":false},"input2":{"name":"input2","displayName":"Input 2","description":"The second input to the activity.","placeholder":"","typeName":"number","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}},"outputs":{"result":{"name":"result","displayName":"Result","description":"The result of the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}}}]}`
+        )
     );
 }
 

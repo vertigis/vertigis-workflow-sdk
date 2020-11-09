@@ -39,11 +39,13 @@ const Foo = (props: CustomFormElementProps) => {
     );
 };
 
-// @displayName Register <name> Form Element
-// @category Custom Activities
-// @description <description>
+/**
+ * @displayName Register <name> Form Element
+ * @category Custom Activities
+ * @description <description>
+ */
 export class RegisterFooElement extends RegisterCustomFormElementBase {
-    // Perform the execution logic of the activity.
+    /** Perform the execution logic of the activity. */
     execute() {
         this.register("<name>", Foo);
     }

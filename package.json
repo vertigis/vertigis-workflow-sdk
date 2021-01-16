@@ -44,6 +44,7 @@
         "postcss-preset-env": "^6.7.0",
         "style-loader": "^2.0.0",
         "ts-loader": "^8.0.12",
+        "ts-morph": "^9.1.0",
         "url-loader": "^4.1.1",
         "uuid": "^8.3.2",
         "webpack": "^5.10.1",

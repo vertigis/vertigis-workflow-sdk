@@ -24,7 +24,10 @@
     },
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
-        "test": "node ./test/index.js"
+        "test": "npm run test:unit && npm run test:e2e",
+        "test:e2e": "node ./test/e2e/index.js",
+        "test:unit": "jest",
+        "test:unit:watch": "npm run test:unit -- --watch"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^4.9.1",
@@ -37,7 +40,6 @@
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
         "fs-extra": "^9.0.1",
-        "globby": "^11.0.1",
         "inquirer": "^7.3.3",
         "postcss": "^8.2.1",
         "postcss-loader": "^4.1.0",
@@ -53,11 +55,13 @@
     },
     "devDependencies": {
         "@geocortex/workflow": "^5.18.1",
+        "@types/jest": "^26.0.20",
         "@types/node": "^14.14.13",
         "conventional-changelog-conventionalcommits": "^4.5.0",
         "cross-env": "^7.0.3",
         "execa": "^5.0.0",
         "husky": "^4.3.6",
+        "jest": "^26.6.3",
         "node-fetch": "^2.6.1",
         "p-retry": "^4.2.0",
         "prettier": "^2.2.1",

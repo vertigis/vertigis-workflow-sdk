@@ -18,7 +18,6 @@ describe("getProjectMetadata", () => {
             const activitySource = `
             import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
             
-            /** Defines the inputs for the TestActivity activity. */
             interface TestActivityInputs {
                 /** 
                  * Input1Comment
@@ -39,7 +38,6 @@ describe("getProjectMetadata", () => {
                 input2: number;
             }
             
-            /** Defines the outputs for the TestActivity activity. */
             interface TestActivityOutputs {
                 /** 
                  * Output1Comment  

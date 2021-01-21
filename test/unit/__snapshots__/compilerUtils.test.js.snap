@@ -3,7 +3,7 @@
 exports[`getProjectMetadata activities passes basic sanity 1`] = `
 Array [
   Object {
-    "action": "uuid:proj-id-123::TestActivity",
+    "action": "fake-action",
     "category": "ActivityCategory",
     "clientOnly": undefined,
     "deprecated": "ActivityDeprecated",
@@ -72,7 +72,7 @@ Array [
       },
     },
     "serverOnly": undefined,
-    "suite": "uuid:proj-id-123",
+    "suite": "fake-suite",
     "supportedApps": undefined,
     "unsupportedApps": undefined,
   },

@@ -66,6 +66,31 @@ describe("getProjectMetadata", () => {
              * @tag ActivityTag3 
              */
             export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+            
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+            expect(activities).toMatchSnapshot();
+        });
+
+        it("unwraps Promise<T> output type to T", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            
+            interface TestActivityOutputs {
+                output1: string;
+            }
+
+            export class TestActivity implements IActivityHandler {
                 static readonly action = "uuid:${uuid}:ActivityAction";
             
                 static readonly suite = "uuid:${uuid}";
@@ -79,7 +104,8 @@ describe("getProjectMetadata", () => {
                 createSourceFile("index.ts", activitySource),
                 uuid
             );
-            expect(activities).toMatchSnapshot();
+
+            expect(activities[0].outputs.output1.typeName).toBe("string");
         });
     });
 

@@ -65,7 +65,6 @@ describe("getProjectMetadata", () => {
              */
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
-            
                 static readonly suite = "fake-suite";
             
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
@@ -80,7 +79,7 @@ describe("getProjectMetadata", () => {
             expect(activities).toMatchSnapshot();
         });
 
-        it("unwraps Promise<T> output type to T", () => {
+        it("unwraps `Promise<T>` output type to `T`", () => {
             const activitySource = `
             import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
             
@@ -89,9 +88,8 @@ describe("getProjectMetadata", () => {
             }
 
             export class TestActivity implements IActivityHandler {
-                static readonly action = "uuid:${uuid}:ActivityAction";
-            
-                static readonly suite = "uuid:${uuid}";
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
             
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
@@ -104,6 +102,50 @@ describe("getProjectMetadata", () => {
             );
 
             expect(activities[0].outputs.output1.typeName).toBe("string");
+        });
+
+        it("has no outputs when output type is `void`", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): void {
+                    return {};
+                }
+            }
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(Object.keys(activities[0].outputs)).toHaveLength(0);
+        });
+
+        it("has no outputs when output type is `Promise<void>`", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): Promise<void> {
+                    return {};
+                }
+            }
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(Object.keys(activities[0].outputs)).toHaveLength(0);
         });
     });
 

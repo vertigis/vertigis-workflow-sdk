@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getProjectMetadata activities works 1`] = `
+exports[`getProjectMetadata activities passes basic sanity 1`] = `
 Array [
   Object {
     "action": "uuid:proj-id-123::TestActivity",
@@ -13,16 +13,17 @@ Array [
     "inputs": Object {
       "input1": Object {
         "clientOnly": undefined,
-        "defaultExpressionHint": undefined,
-        "defaultValue": undefined,
-        "deprecated": undefined,
-        "description": undefined,
-        "displayName": "Input1",
-        "isRequired": undefined,
+        "defaultExpressionHint": "Input1DefaultExpressionHint",
+        "defaultValue": "Input1DefaultValue",
+        "deprecated": "Input1Deprecated",
+        "description": "Input1Description",
+        "displayName": "Input1DisplayName",
+        "isHidden": true,
+        "isRequired": true,
         "name": "input1",
         "noExpressions": undefined,
         "onlineOnly": undefined,
-        "placeholder": undefined,
+        "placeholder": "Input1Placeholder",
         "serverOnly": undefined,
         "supportedApps": undefined,
         "typeName": "string",
@@ -35,6 +36,7 @@ Array [
         "deprecated": undefined,
         "description": undefined,
         "displayName": "Input2",
+        "isHidden": undefined,
         "isRequired": undefined,
         "name": "input2",
         "noExpressions": undefined,
@@ -46,6 +48,7 @@ Array [
         "unsupportedApps": undefined,
       },
     },
+    "isHidden": true,
     "name": "TestActivity",
     "onlineOnly": undefined,
     "outputs": Object {
@@ -54,8 +57,9 @@ Array [
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
         "deprecated": undefined,
-        "description": undefined,
-        "displayName": "Output1",
+        "description": "Output1Description",
+        "displayName": "Output1DisplayName",
+        "isHidden": true,
         "isRequired": undefined,
         "name": "output1",
         "noExpressions": undefined,

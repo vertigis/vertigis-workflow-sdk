@@ -14,24 +14,26 @@ const uuid = "proj-id-123";
 
 describe("getProjectMetadata", () => {
     describe("activities", () => {
-        it("works", () => {
+        it("passes basic sanity", () => {
             const activitySource = `
             import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
             
             /** Defines the inputs for the TestActivity activity. */
             interface TestActivityInputs {
-                /** Input1Comment */
-                // @defaultExpressionHint Input1DefaultExpressionHint 
-                // @defaultValue Input1DefaultValue 
-                // @deprecated Input1Deprecated
-                // @description Input1Description 
-                // @displayName Input1DisplayName
-                // @helpUrl http://help/Activity/Input1 
-                // @placeholder Input1Placeholder 
-                // @required
-                // @hidden
-                // @tag Input1Tag1 value1
-                // @tag Input1Tag2 value2
+                /** 
+                 * Input1Comment
+                 * @defaultExpressionHint Input1DefaultExpressionHint
+                 * @defaultValue Input1DefaultValue
+                 * @deprecated Input1Deprecated
+                 * @description Input1Description 
+                 * @displayName Input1DisplayName
+                 * @helpUrl http://help/Activity/Input1 
+                 * @placeholder Input1Placeholder
+                 * @required
+                 * @hidden
+                 * @tag Input1Tag1 value1
+                 * @tag Input1Tag2 value2
+                 */
                 input1: string;
             
                 input2: number;
@@ -39,12 +41,14 @@ describe("getProjectMetadata", () => {
             
             /** Defines the outputs for the TestActivity activity. */
             interface TestActivityOutputs {
-                /** Output1Comment  */
-                // @description Output1Description 
-                // @displayName Output1DisplayName
-                // @helpUrl http://help/Activity/Output1
-                // @hidden
-                // @tag Output1Tag1 value1
+                /** 
+                 * Output1Comment  
+                 * @description Output1Description 
+                 * @displayName Output1DisplayName
+                 * @helpUrl http://help/Activity/Output1
+                 * @hidden
+                 * @tag Output1Tag1 value1
+                 */
                 output1: string;
             }
             
@@ -56,6 +60,7 @@ describe("getProjectMetadata", () => {
              * @description ActivityDescription 
              * @displayName ActivityDisplayName 
              * @helpUrl http://help/TestActivity 
+             * @hidden
              * @tag ActivityTag1 value1
              * @tag ActivityTag2 value2
              * @tag ActivityTag3 

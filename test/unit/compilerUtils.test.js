@@ -356,6 +356,47 @@ describe("getProjectMetadata", () => {
             expect(elements).toMatchSnapshot();
         });
 
+        it("includes elements with basic props interface", () => {
+            const activitySource = `
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import React, { useState } from "react";
+            
+            interface Props extends FormElementProps<string> {}
+            
+            const Foo = (props: Props) => null;
+            
+            export const fooRegistration: FormElementRegistration<Props> = {
+                component: Foo,
+                id: "foo",
+            };
+            
+            const Bar = (props: FormElementProps) => null;
+            
+            export const barRegistration: FormElementRegistration = {
+                component: Bar,
+                id: "bar",
+            };
+            
+            const Baz = () => null;
+            
+            export const bazRegistration: FormElementRegistration = {
+                component: Baz,
+                id: "baz",
+            };
+            `;
+
+            const { elements } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(elements.map((element) => element.inputs)).toEqual([
+                {},
+                {},
+                {},
+            ]);
+        });
+
         it("throws error for invalid `component` value", () => {
             const activitySource = `
             import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";

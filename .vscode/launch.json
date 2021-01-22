@@ -7,12 +7,7 @@
         {
             "name": "Debug unit tests",
             "request": "launch",
-            "runtimeArgs": [
-                "run-script",
-                "test:unit:watch",
-                "--",
-                "--runInBand"
-            ],
+            "runtimeArgs": ["run-script", "test:unit", "--", "--runInBand"],
             "runtimeExecutable": "npm",
             "skipFiles": ["<node_internals>/**"],
             "console": "integratedTerminal",

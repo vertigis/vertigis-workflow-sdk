@@ -266,7 +266,7 @@ describe("getProjectMetadata", () => {
     describe("elements", () => {
         it("passes basic sanity", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
             import React, { useState } from "react";
             
             interface Props extends FormElementProps<string> {
@@ -358,7 +358,7 @@ describe("getProjectMetadata", () => {
 
         it("includes elements with basic props interface", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
             import React, { useState } from "react";
             
             interface Props extends FormElementProps<string> {}
@@ -399,7 +399,7 @@ describe("getProjectMetadata", () => {
 
         it("throws error for invalid `component` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
 
             const Foo = 42;
             
@@ -421,9 +421,9 @@ describe("getProjectMetadata", () => {
 
         it("throws error for shorthand `id` expression", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
 
-            const Foo = (props: Props) => null;
+            const Foo = () => null;
 
             const id = "foo";
             
@@ -445,9 +445,9 @@ describe("getProjectMetadata", () => {
 
         it("throws error for incorrect type of `id` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow";
+            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
 
-            const Foo = (props: Props) => null;
+            const Foo = () => null;
             
             export const fooRegistration: FormElementRegistration = {
                 component: Foo,

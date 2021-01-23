@@ -51,16 +51,20 @@ const paths = require("../config/paths");
         const { name, description, type } = answers;
 
         let templateName;
-        const destFolder = path.join(paths.projSrc, "activities");
+        let destFolderName;
         let destFilename;
 
         if (type === "activity") {
             templateName = "activity.ts";
+            destFolderName = "activities";
             destFilename = `${name}.ts`;
         } else {
             templateName = "element.tsx";
+            destFolderName = "elements";
             destFilename = `${name}.tsx`;
         }
+
+        const destFolder = path.join(paths.projSrc, destFolderName);
 
         const indexPath = path.join(paths.projSrc, "index.ts");
 
@@ -78,7 +82,10 @@ const paths = require("../config/paths");
 
         // Replace placeholder default export that is used to prevent isolatedModules error.
         indexContent = indexContent.replace("\nexport default {};\n", "");
-        indexContent += `\nexport * from "./activities/${name}";\n`;
+
+        const exportToken =
+            type === "activity" ? `${name}Activity` : `${name}Registration`;
+        indexContent += `\nexport { default as ${exportToken} } from "./${destFolderName}/${name}";\n`;
 
         await fs.mkdir(destFolder, { recursive: true });
 

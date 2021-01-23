@@ -1,7 +1,7 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 
 /** An interface that defines the inputs of the activity. */
-export interface FooInputs {
+interface FooInputs {
     /**
      * @displayName Input 1
      * @description The first input to the activity.
@@ -17,7 +17,7 @@ export interface FooInputs {
 }
 
 /** An interface that defines the outputs of the activity. */
-export interface FooOutputs {
+interface FooOutputs {
     /**
      * @description The result of the activity.
      */
@@ -29,7 +29,7 @@ export interface FooOutputs {
  * @category Custom Activities
  * @description <description>
  */
-export class Foo implements IActivityHandler {
+export default class FooActivity implements IActivityHandler {
     /** Perform the execution logic of the activity. */
     execute(inputs: FooInputs): FooOutputs {
         return {

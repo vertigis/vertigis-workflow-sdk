@@ -54,7 +54,6 @@ Array [
       },
     },
     "isHidden": true,
-    "name": "TestActivity",
     "onlineOnly": true,
     "outputs": Object {
       "output1": Object {

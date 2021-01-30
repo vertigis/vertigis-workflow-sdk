@@ -1,4 +1,4 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@geocortex/workflow/runtime";
 
 /** An interface that defines the inputs of the activity. */
 interface FooInputs {

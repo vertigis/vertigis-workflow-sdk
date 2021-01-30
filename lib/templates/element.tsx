@@ -34,7 +34,7 @@ function Foo(props: FooProps): React.ReactElement {
 
 const FooElementRegistration: FormElementRegistration<FooProps> = {
     component: Foo,
-    getInitialState: () => ({ value: "Hello World" }),
+    getInitialProperties: () => ({ value: "Hello World" }),
     id: "Foo",
 };
 

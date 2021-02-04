@@ -267,7 +267,7 @@ describe("getProjectMetadata", () => {
         it("passes basic sanity", () => {
             const activitySource = `
             import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
-            import React, { useState } from "react";
+            import React from "react";
             
             interface Props extends FormElementProps<string> {
                 /** 
@@ -359,7 +359,7 @@ describe("getProjectMetadata", () => {
         it("includes elements with basic props interface", () => {
             const activitySource = `
             import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
-            import React, { useState } from "react";
+            import React from "react";
             
             interface Props extends FormElementProps<string> {}
             

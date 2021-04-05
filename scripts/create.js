@@ -82,7 +82,7 @@ const updateTemplateContent = (rootPath) => {
 };
 
 const installNpmDeps = (rootPath) => {
-    console.log(`Installing packages. This might take a couple minutes.\n`);
+    console.log(`Installing packages. This might take a couple of minutes.\n`);
     const selfVersion = require(path.join(rootDir, "package.json")).version;
 
     // First install existing deps.

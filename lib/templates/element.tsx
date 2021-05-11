@@ -1,52 +1,41 @@
 import * as React from "react";
-import type { CustomFormElementProps } from "@geocortex/workflow/runtime/app/RegisterCustomFormElementBase";
-import { RegisterCustomFormElementBase } from "@geocortex/workflow/runtime/app/RegisterCustomFormElementBase";
+import {
+    FormElementProps,
+    FormElementRegistration,
+} from "@geocortex/workflow/runtime";
 
 /**
- * A simple React Component that demonstrates raising events.
+ * The generic type argument provided to `FormElementProps<T>` controls the type
+ * of `props.value` and `props.setValue(value)`. If your element doesn't need a
+ * `value`, you can omit the type argument.
+ *
+ * You can also declare additional public properties of your element by adding
+ * properties to this interface. The properties will be managed by the Workflow
+ * runtime, and passed in as `props`. You can update the properties by using
+ * `props.setProperty(key, value)`.
+ */
+interface FooProps extends FormElementProps<string> {}
+
+/**
+ * A Workflow element built using React.
+ * @displayName <name>
+ * @description <description>
  * @param props The props that will be provided by the Workflow runtime.
  */
-const Foo = (props: CustomFormElementProps) => {
-    const raiseClick = (event) => {
-        // Raise the clicked event.
-        props.raiseEvent("clicked", new Date());
-    };
-
-    // TODO: Show pattern for managed state via props.element
-    const raiseChange = (event) => {
-        // Raise the changed event.
-        props.raiseEvent("changed", new Date());
-    };
-
-    const raiseCustom = (event) => {
-        // Raise the custom event with a custom event value.
-        const eventValue = {
-            customEventType: "custom1",
-            data: new Date(),
-        };
-        props.raiseEvent("custom", eventValue);
-    };
-
+function Foo(props: FooProps): React.ReactElement {
+    const { setValue, value } = props;
     return (
-        <div>
-            A simple custom Workflow form element
-            <div>
-                <button onClick={raiseClick}>Raise click</button>
-                <button onClick={raiseChange}>Raise change</button>
-                <button onClick={raiseCustom}>Raise custom</button>
-            </div>
-        </div>
+        <input
+            onChange={(event) => setValue(event.currentTarget.value)}
+            value={value}
+        />
     );
+}
+
+const FooElementRegistration: FormElementRegistration<FooProps> = {
+    component: Foo,
+    getInitialProperties: () => ({ value: "Hello World" }),
+    id: "Foo",
 };
 
-/**
- * @displayName Register <name> Form Element
- * @category Custom Activities
- * @description <description>
- */
-export class RegisterFooElement extends RegisterCustomFormElementBase {
-    /** Perform the execution logic of the activity. */
-    execute() {
-        this.register("<name>", Foo);
-    }
-}
+export default FooElementRegistration;

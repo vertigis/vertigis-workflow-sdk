@@ -1,5 +1,9 @@
+const { throws } = require("assert");
 const { Project } = require("ts-morph");
 const { getProjectMetadata } = require("../../lib/compilerUtils");
+const {
+    default: InvalidMetatagsError,
+} = require("../../lib/InvalidMetatagsError");
 
 // Maintain a single instance of a project to avoid the large cost of
 // initialization (~3s).
@@ -46,8 +50,7 @@ describe("getProjectMetadata", () => {
                  * @onlineOnly
                  * @placeholder Input1Placeholder
                  * @required
-                 * @supportedApps gvh, gxw
-                 * @unsupportedApps wab
+                 * @supportedApps gvh
                  * @tag Input1Tag1 value1
                  * @tag Input1Tag2 value2
                  */
@@ -70,8 +73,7 @@ describe("getProjectMetadata", () => {
                  * @onlineOnly
                  * @placeholder Output1Placeholder
                  * @required
-                 * @supportedApps gvh, gxw
-                 * @unsupportedApps wab
+                 * @supportedApps gxw
                  * @tag Output1Tag1 value1
                  * @tag Output1Tag2 value2
                  */
@@ -92,7 +94,6 @@ describe("getProjectMetadata", () => {
              * @hidden
              * @onlineOnly
              * @supportedApps gvh, gxw
-             * @unsupportedApps wab
              * @tag ActivityTag1 value1
              * @tag ActivityTag2 value2
              * @tag ActivityTag3 
@@ -125,6 +126,144 @@ describe("getProjectMetadata", () => {
             );
 
             expect(activities).toMatchSnapshot();
+        });
+
+        it("rejects invalid metadata", () => {
+            // Activity: Client & Server tags
+            let activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            /**
+             * @clientOnly
+             * @serverOnly
+             */
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: any): any {
+                    return undefined;
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
+
+            // Activity: Supported & Unsupported Apps
+            activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            /**
+             * @supportedApps gvh
+             * @unsupportedApps wab
+             */
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: any): any {
+                    return undefined;
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
+
+            // Input: Client & Server tags
+            activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            interface TestActivityInputs {
+                /** 
+                 * @clientOnly
+                 * @serverOnly
+                 */
+                input1: number;
+                input2: string;
+            }
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: TestActivityInputs): any {
+                    return undefined;
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
+
+            // Input: Supported & Unsupported Apps
+            activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            interface TestActivityInputs {
+                /** 
+                 * @supportedApps gvh
+                 * @unsupportedApps wab
+                 */
+                input1: number;
+                input2: string;
+            }
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: TestActivityInputs): any {
+                    return undefined;
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
+
+            // Output: Client & Server tags
+            activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            interface TestActivityOutputs {
+                /** 
+                 * @clientOnly
+                 * @serverOnly
+                 */
+                output1: number;
+                output2: string;
+            }
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: any): TestActivityOutputs {
+                    return { output1: 12, output2: "fred" };
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
+
+            // Input: Supported & Unsupported Apps
+            activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            interface TestActivityOutputs {
+                /** 
+                 * @supportedApps gvh
+                 * @unsupportedApps wab
+                 */
+                output1: number;
+                output2: string;
+            }
+            export class TestActivity implements IActivityHandler {
+                execute(inputs: any): TestActivityOutputs {
+                    return { output1: 12, output2: "fred" };
+                }
+            }
+            `;
+            expect(() =>
+                getProjectMetadata(
+                    createSourceFile("index.ts", activitySource),
+                    uuid
+                )
+            ).toThrow(InvalidMetatagsError);
         });
 
         it("unwraps `Promise<T>` output type to `T`", () => {
@@ -283,7 +422,6 @@ describe("getProjectMetadata", () => {
                  * @onlineOnly
                  * @placeholder Input1Placeholder
                  * @required
-                 * @supportedApps gvh, gxw
                  * @unsupportedApps wab
                  */
                 input1: string;
@@ -299,7 +437,6 @@ describe("getProjectMetadata", () => {
              * @description ElementDescription 
              * @displayName ElementDisplayName 
              * @helpUrl http://help/TestElement
-             * @supportedApps gvh, gxw
              * @unsupportedApps wab
              */
             const Foo = (props: Props) => null;
@@ -317,7 +454,6 @@ describe("getProjectMetadata", () => {
              * @description ElementDescription 
              * @displayName ElementDisplayName 
              * @helpUrl http://help/TestElement
-             * @supportedApps gvh, gxw
              * @unsupportedApps wab
              */
             function Bar(props: Props) { return null; };
@@ -335,7 +471,6 @@ describe("getProjectMetadata", () => {
              * @description ElementDescription 
              * @displayName ElementDisplayName 
              * @helpUrl http://help/TestElement
-             * @supportedApps gvh, gxw
              * @unsupportedApps wab
              */
             class Baz extends React.Component<Props> {

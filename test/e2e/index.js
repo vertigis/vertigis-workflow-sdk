@@ -12,7 +12,7 @@ const https = require("https");
 const path = require("path");
 const pRetry = require("p-retry");
 
-const rootDir = path.join(__dirname, "..");
+const rootDir = path.join(__dirname, "../..");
 const testLibProjPath = path.join(rootDir, "test-lib");
 
 // Will be set on child processes (via execa).
@@ -21,6 +21,7 @@ process.env.SMOKE_TEST = "true";
 /** @type {execa.ExecaChildProcess<string>} */
 let subprocess;
 
+/** @returns {string} */
 function getProjectUuid() {
     return require(path.join(testLibProjPath, "uuid"));
 }
@@ -123,7 +124,7 @@ async function testStartProject() {
     );
 }
 
-async function testGenerateActivity() {
+async function testGenerate() {
     const cleanStdoutData = (data) =>
         data
             // Remove ansi escape sequences (font styling, etc.)
@@ -184,7 +185,9 @@ async function testGenerateActivity() {
                         path.join(testLibProjPath, "src/index.ts"),
                         "utf-8"
                     )
-                    .includes('export * from "./activities/FooName";'),
+                    .includes(
+                        'export { default as FooNameActivity } from "./activities/FooName";'
+                    ),
                 true,
                 "Generate activity should update index.ts exports"
             );
@@ -205,11 +208,11 @@ async function testGenerateActivity() {
             );
 
             const activityContentAssertions = [
-                "export interface FooNameInputs {",
-                "export interface FooNameOutputs {",
+                "interface FooNameInputs {",
+                "interface FooNameOutputs {",
                 "* @displayName FooName",
                 "* @description FooName description",
-                "export class FooName implements IActivityHandler {",
+                "export default class FooNameActivity implements IActivityHandler {",
                 "execute(inputs: FooNameInputs): FooNameOutputs {",
             ];
 
@@ -252,7 +255,7 @@ async function testGenerateActivity() {
         () => {
             assert.strictEqual(
                 fs.existsSync(
-                    path.join(testLibProjPath, "src/activities/BarName.tsx")
+                    path.join(testLibProjPath, "src/elements/BarName.tsx")
                 ),
                 true,
                 "Generate element should create element module"
@@ -263,22 +266,27 @@ async function testGenerateActivity() {
                         path.join(testLibProjPath, "src/index.ts"),
                         "utf-8"
                     )
-                    .includes('export * from "./activities/BarName";'),
+                    .includes(
+                        'export { default as BarNameRegistration } from "./elements/BarName";'
+                    ),
                 true,
                 "Generate element should update index.ts exports"
             );
 
             const elementContent = fs.readFileSync(
-                path.join(testLibProjPath, "src/activities/BarName.tsx"),
+                path.join(testLibProjPath, "src/elements/BarName.tsx"),
                 "utf-8"
             );
 
             const elementContentAssertions = [
-                "const BarName = (props",
-                "* @displayName Register BarName Form Element",
+                "interface BarNameProps extends FormElementProps<string> {}",
+                "* @displayName BarName",
                 "* @description BarName description",
-                "export class RegisterBarNameElement extends RegisterCustomFormElementBase {",
-                'this.register("BarName", BarName)',
+                "function BarName(props: BarNameProps): React.ReactElement",
+                "const BarNameElementRegistration: FormElementRegistration<BarNameProps>",
+                "component: BarName",
+                'id: "BarName"',
+                "export default BarNameElementRegistration",
             ];
 
             for (const assertion of elementContentAssertions) {
@@ -307,12 +315,49 @@ function testActivityPackMetadataGeneration() {
     const projectUuid = getProjectUuid();
     const metadata = require(metadataPath);
 
-    assert.deepStrictEqual(
-        metadata,
-        JSON.parse(
-            `{"activities":[{"action":"uuid:${projectUuid}::RegisterBarNameElement","suite":"uuid:${projectUuid}","displayName":"Register BarName Form Element","description":"BarName description","category":"Custom Activities","tags":{},"inputs":{},"outputs":{}},{"action":"uuid:${projectUuid}::FooName","suite":"uuid:${projectUuid}","displayName":"FooName","description":"FooName description","category":"Custom Activities","tags":{},"inputs":{"input1":{"name":"input1","displayName":"Input 1","description":"The first input to the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":true,"noExpressions":false},"input2":{"name":"input2","displayName":"Input 2","description":"The second input to the activity.","placeholder":"","typeName":"number","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}},"outputs":{"result":{"name":"result","displayName":"Result","description":"The result of the activity.","placeholder":"","typeName":"string","defaultValue":"","defaultExpressionHint":"","isRequired":false,"noExpressions":false}}}]}`
-        )
-    );
+    assert.deepStrictEqual(metadata, {
+        activities: [
+            {
+                action: `uuid:${projectUuid}::FooNameActivity`,
+                category: "Custom Activities",
+                description: "FooName description",
+                displayName: "FooName",
+                inputs: {
+                    input1: {
+                        description: "The first input to the activity.",
+                        displayName: "Input 1",
+                        isRequired: true,
+                        name: "input1",
+                        typeName: "string",
+                    },
+                    input2: {
+                        description: "The second input to the activity.",
+                        displayName: "Input 2",
+                        name: "input2",
+                        typeName: "number | undefined",
+                    },
+                },
+                outputs: {
+                    result: {
+                        description: "The result of the activity.",
+                        displayName: "Result",
+                        name: "result",
+                        typeName: "string",
+                    },
+                },
+                suite: `uuid:${projectUuid}`,
+            },
+        ],
+        elements: [
+            {
+                description: "BarName description",
+                displayName: "BarName",
+                id: "BarName",
+                inputs: {},
+                suite: `uuid:${projectUuid}`,
+            },
+        ],
+    });
 }
 
 function rmdir(path) {
@@ -326,15 +371,15 @@ function cleanup() {
     console.log("Done cleaning.");
 }
 
-(async () => {
+void (async () => {
     try {
         await testCreateProject();
         // Test build on empty project
         await testBuildProject();
-        await testGenerateActivity();
-        // Test build again now that we've generated activities
+        await testGenerate();
+        // Test build again now that we've generated activities and elements.
         await testBuildProject();
-        await testActivityPackMetadataGeneration();
+        testActivityPackMetadataGeneration();
         await testStartProject();
         console.log("\n\nAll tests passed!\n");
         cleanup();

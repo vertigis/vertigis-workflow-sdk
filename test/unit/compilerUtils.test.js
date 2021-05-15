@@ -397,8 +397,162 @@ describe("getProjectMetadata", () => {
             );
 
             expect(activities[0].inputs.input1.typeName).toBe(
-                "{ foo: string; }"
+                `{
+    foo: string;
+}`
             );
+        });
+
+        it("handles union types", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            
+            interface TestActivityInputs {
+                input1: "foo" | "bar" | string;
+            }
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(activities[0].inputs.input1.typeName).toBe(
+                `"foo" | "bar" | string`
+            );
+        });
+
+        it("handles unknown imported types", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { MyInterface } from "./other";
+            
+            interface TestActivityInputs {
+                input1: MyInterface;
+            }
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(activities[0].inputs.input1.typeName).toBe("MyInterface");
+        });
+
+        it("handles imported types", () => {
+            const interfaceSource = `
+            export interface MyInterface {
+                foo: string;
+            };
+            `;
+            sourceFiles.push(
+                project.createSourceFile("MyInterface.ts", interfaceSource)
+            );
+
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { MyInterface } from "../MyInterface";
+            
+            interface TestActivityInputs {
+                input1: MyInterface;
+            }
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+            sourceFiles.push(
+                project.createSourceFile(
+                    "activities/TestActivity.ts",
+                    activitySource
+                )
+            );
+
+            const indexSource = `
+            export * from "./activities/TestActivity";
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", indexSource),
+                uuid
+            );
+
+            expect(activities[0].inputs.input1.typeName).toBe("MyInterface");
+        });
+
+        it("handles absolute path sources", () => {
+            // This test was specifically added to ensure type names do not contain inline imports
+            // See https://github.com/dsherret/ts-morph/issues/453#issuecomment-427405736
+            const interfaceSource = `
+            export interface MyInterface {
+                foo: string;
+            };
+            `;
+            sourceFiles.push(
+                project.createSourceFile(
+                    "c:/temp/MyInterface.ts",
+                    interfaceSource
+                )
+            );
+
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { MyInterface } from "../MyInterface";
+            
+            interface TestActivityInputs {
+                input1: MyInterface;
+            }
+
+            export class TestActivity implements IActivityHandler {
+                static readonly action = "fake-action";
+                static readonly suite = "fake-suite";
+            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+            sourceFiles.push(
+                project.createSourceFile(
+                    "c:/temp/activities/TestActivity.ts",
+                    activitySource
+                )
+            );
+
+            const indexSource = `
+            export * from "./activities/TestActivity";
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("c:/temp/index.ts", indexSource),
+                uuid
+            );
+
+            expect(activities[0].inputs.input1.typeName).toBe("MyInterface");
         });
     });
 

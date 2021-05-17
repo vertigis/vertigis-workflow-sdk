@@ -334,7 +334,7 @@ function testActivityPackMetadataGeneration() {
                         description: "The second input to the activity.",
                         displayName: "Input 2",
                         name: "input2",
-                        typeName: "number | undefined",
+                        typeName: "number",
                     },
                 },
                 outputs: {

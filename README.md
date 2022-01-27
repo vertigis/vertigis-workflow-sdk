@@ -3,7 +3,7 @@
 ![CI/CD](https://github.com/geocortex/vertigis-workflow-sdk/workflows/CI/CD/badge.svg)
 [![npm](https://img.shields.io/npm/v/@vertigis/workflow-sdk)](https://www.npmjs.com/package/@vertigis/workflow-sdk)
 
-This SDK makes it easy to create custom activity packs for [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/geocortex-workflow/).
+This SDK makes it easy to create custom activity packs for [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/vertigis-studio-workflow/).
 
 ## Requirements
 

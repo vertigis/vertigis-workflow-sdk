@@ -31,6 +31,7 @@ module.exports = {
     externals: [
         /^dojo\/.+$/,
         /^esri\/.+$/,
+        /^@arcgis\/.+$/,
         /^@geocortex\/.+$/,
         /^@vertigis\/.+$/,
         "react",

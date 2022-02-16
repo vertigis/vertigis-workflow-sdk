@@ -1,7 +1,7 @@
 {
     "name": "@vertigis/workflow-sdk",
     "version": "0.0.0-semantically-released",
-    "description": "The SDK for extending Geocortex Workflow",
+    "description": "The SDK for extending VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/vertigis-workflow-sdk.git"

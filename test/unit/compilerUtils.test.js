@@ -128,6 +128,36 @@ describe("getProjectMetadata", () => {
             expect(activities).toMatchSnapshot();
         });
 
+        it("produces minimal defaults when JSDoc comments are absent", () => {
+            const activitySource = `
+            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            
+            interface TestActivityInputs {
+                inputA: string;
+            }
+            
+            interface TestActivityOutputs {
+                outputB: string;
+            }
+
+            export class TestActivity implements IActivityHandler {            
+                execute(inputs: TestActivityInputs): TestActivityOutputs {
+                    return {};
+                }
+            }
+            `;
+
+            const { activities } = getProjectMetadata(
+                createSourceFile("index.ts", activitySource),
+                uuid
+            );
+
+            expect(activities[0].category).toBe("Custom Activities");
+            expect(activities[0].displayName).toBe("Test Activity");
+            expect(activities[0].inputs.inputA.displayName).toBe("Input A");
+            expect(activities[0].outputs.outputB.displayName).toBe("Output B");
+        });
+
         it("rejects invalid metadata", () => {
             // Activity: Client & Server tags
             let activitySource = `

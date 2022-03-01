@@ -24,35 +24,42 @@ const port = process.env.PORT || 5000;
 
 const compiler = webpack(webpackConfig);
 const serverConfig = {
-    clientLogLevel: "silent",
+    client: {
+        logging: "none",
+    },
     compress: true,
-    contentBase: false,
     headers: {
         "Access-Control-Allow-Origin": "*",
     },
     hot: false,
-    https: true,
-    key: argv.key,
-    cert: argv.cert,
-    ca: argv.ca,
-    open:
-        process.env.SMOKE_TEST !== "true" &&
-        process.env.OPEN_BROWSER !== "false",
-    openPage: "main.js",
-    port,
-    publicPath: "/",
-    stats: "minimal",
-    sockHost: "localhost",
-    watchOptions: {
-        // Don't bother watching node_modules files for changes. This reduces
-        // CPU/mem overhead, but means that changes from `npm install` while the
-        // dev server is running won't take effect until restarted.
-        ignored: /node_modules/,
+    server: {
+        type: "https",
+        options: {
+            key: argv.key,
+            cert: argv.cert,
+            ca: argv.ca,
+        },
     },
+    host: "localhost",
+    open: process.env.SMOKE_TEST !== "true" &&
+        process.env.OPEN_BROWSER !== "false" && {
+            target: ["main.js"],
+        },
+    port,
+    static: {
+        publicPath: "/",
+        watch: {
+            // Don't bother watching node_modules files for changes. This reduces
+            // CPU/mem overhead, but means that changes from `npm install` while the
+            // dev server is running won't take effect until restarted.
+            ignored: [/node_modules/],
+        },
+    },
+    //stats: "minimal",
 };
 
-const devServer = new WebpackDevServer(compiler, serverConfig);
-devServer.listen(serverConfig.port, serverConfig.host, (err) => {
+const devServer = new WebpackDevServer(serverConfig, compiler);
+devServer.startCallback((err) => {
     if (err) {
         throw err;
     }
@@ -60,7 +67,7 @@ devServer.listen(serverConfig.port, serverConfig.host, (err) => {
 
 ["SIGINT", "SIGTERM"].forEach((signal) => {
     process.on(signal, () => {
-        devServer.close(() => {
+        devServer.stopCallback(() => {
             process.exit();
         });
     });

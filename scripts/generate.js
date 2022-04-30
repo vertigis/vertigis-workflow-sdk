@@ -81,7 +81,7 @@ const paths = require("../config/paths");
             .replace(/<description>/g, description);
 
         // Replace placeholder default export that is used to prevent isolatedModules error.
-        indexContent = indexContent.replace("\nexport default {};\n", "");
+        indexContent = indexContent.replace("\nexport default {};", "");
 
         const exportToken =
             type === "activity" ? `${name}Activity` : `${name}Registration`;

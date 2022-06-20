@@ -6,6 +6,7 @@ Array [
     "action": "fake-action",
     "category": "ActivityCategory",
     "clientOnly": true,
+    "defaultName": "ActivityDefaultName",
     "deprecated": "ActivityDeprecated",
     "description": "ActivityDescription",
     "displayName": "ActivityDisplayName",

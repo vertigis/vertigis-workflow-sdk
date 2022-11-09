@@ -138,7 +138,7 @@ const printSuccess = () => {
     console.log(chalk.cyan(`  cd ${directoryName}`));
     console.log(chalk.cyan("  npm start\n"));
     console.log(
-        "You can learn more by visiting https://developers.geocortex.com/docs/workflow/sdk-web-overview/"
+        "You can learn more by visiting https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/"
     );
 };
 

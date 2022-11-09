@@ -66,7 +66,7 @@ const build = () => {
                 );
                 console.log(
                     `You can learn more about deploying your custom code at ${chalk.cyan(
-                        "https://developers.geocortex.com/docs/workflow/sdk-web-overview/#deployment"
+                        "https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#deployment"
                     )}`
                 );
             }

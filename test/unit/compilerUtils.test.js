@@ -34,18 +34,18 @@ describe("getProjectMetadata", () => {
     describe("activities", () => {
         it("passes basic sanity", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityInputs {
-                /** 
+                /**
                  * Input1Comment
                  * @clientOnly
                  * @defaultExpressionHint Input1DefaultExpressionHint
                  * @defaultValue Input1DefaultValue
                  * @deprecated Input1Deprecated
-                 * @description Input1Description 
+                 * @description Input1Description
                  * @displayName Input1DisplayName
-                 * @helpUrl http://help/Activity/Input1 
+                 * @helpUrl http://help/Activity/Input1
                  * @hidden
                  * @onlineOnly
                  * @placeholder Input1Placeholder
@@ -55,20 +55,20 @@ describe("getProjectMetadata", () => {
                  * @tag Input1Tag2 value2
                  */
                 input1: string;
-            
+
                 input2: number;
             }
-            
+
             interface TestActivityOutputs {
-                /** 
+                /**
                  * Output1Comment
                  * @clientOnly
                  * @defaultExpressionHint Output1DefaultExpressionHint
                  * @defaultValue Output1DefaultValue
                  * @deprecated Output1Deprecated
-                 * @description Output1Description 
+                 * @description Output1Description
                  * @displayName Output1DisplayName
-                 * @helpUrl http://help/Activity/Output1 
+                 * @helpUrl http://help/Activity/Output1
                  * @hidden
                  * @onlineOnly
                  * @placeholder Output1Placeholder
@@ -81,27 +81,27 @@ describe("getProjectMetadata", () => {
 
                 output2: number;
             }
-            
-            /** 
-             * ActivityComment 
+
+            /**
+             * ActivityComment
              * @category ActivityCategory
              * @clientOnly
              * @defaultName ActivityDefaultName
              * @deprecated ActivityDeprecated
-             * @description ActivityDescription 
-             * @displayName ActivityDisplayName 
-             * @helpUrl http://help/TestActivity 
+             * @description ActivityDescription
+             * @displayName ActivityDisplayName
+             * @helpUrl http://help/TestActivity
              * @hidden
              * @onlineOnly
              * @supportedApps gvh, gxw
              * @tag ActivityTag1 value1
              * @tag ActivityTag2 value2
-             * @tag ActivityTag3 
+             * @tag ActivityTag3
              */
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -113,7 +113,7 @@ describe("getProjectMetadata", () => {
             export class NotAnActivity {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -130,17 +130,17 @@ describe("getProjectMetadata", () => {
 
         it("produces minimal defaults when JSDoc comments are absent", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityInputs {
                 inputA: string;
             }
-            
+
             interface TestActivityOutputs {
                 outputB: string;
             }
 
-            export class TestActivity implements IActivityHandler {            
+            export class TestActivity implements IActivityHandler {
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -161,7 +161,7 @@ describe("getProjectMetadata", () => {
         it("rejects invalid metadata", () => {
             // Activity: Client & Server tags
             let activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             /**
              * @clientOnly
              * @serverOnly
@@ -181,7 +181,7 @@ describe("getProjectMetadata", () => {
 
             // Activity: Supported & Unsupported Apps
             activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             /**
              * @supportedApps gvh
              * @unsupportedApps wab
@@ -201,9 +201,9 @@ describe("getProjectMetadata", () => {
 
             // Input: Client & Server tags
             activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             interface TestActivityInputs {
-                /** 
+                /**
                  * @clientOnly
                  * @serverOnly
                  */
@@ -225,9 +225,9 @@ describe("getProjectMetadata", () => {
 
             // Input: Supported & Unsupported Apps
             activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             interface TestActivityInputs {
-                /** 
+                /**
                  * @supportedApps gvh
                  * @unsupportedApps wab
                  */
@@ -249,9 +249,9 @@ describe("getProjectMetadata", () => {
 
             // Output: Client & Server tags
             activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             interface TestActivityOutputs {
-                /** 
+                /**
                  * @clientOnly
                  * @serverOnly
                  */
@@ -273,9 +273,9 @@ describe("getProjectMetadata", () => {
 
             // Input: Supported & Unsupported Apps
             activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             interface TestActivityOutputs {
-                /** 
+                /**
                  * @supportedApps gvh
                  * @unsupportedApps wab
                  */
@@ -298,8 +298,8 @@ describe("getProjectMetadata", () => {
 
         it("unwraps `Promise<T>` output type to `T`", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityOutputs {
                 output1: string;
             }
@@ -307,7 +307,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -324,12 +324,12 @@ describe("getProjectMetadata", () => {
 
         it("has no outputs when output type is `void`", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): void {
                     return {};
                 }
@@ -346,12 +346,12 @@ describe("getProjectMetadata", () => {
 
         it("has no outputs when output type is `Promise<void>`", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): Promise<void> {
                     return {};
                 }
@@ -368,12 +368,12 @@ describe("getProjectMetadata", () => {
 
         it("handles Promise<T> inputs/outputs", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityInputs {
                 input1: Promise<string>;
             }
-            
+
             interface TestActivityOutputs {
                 output1: Promise<boolean>;
             }
@@ -381,7 +381,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -403,8 +403,8 @@ describe("getProjectMetadata", () => {
 
         it("handles complex types", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityInputs {
                 input1: {
                     foo: string;
@@ -414,7 +414,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -435,8 +435,8 @@ describe("getProjectMetadata", () => {
 
         it("handles union types", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
-            
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
+
             interface TestActivityInputs {
                 input1: "foo" | "bar" | string;
             }
@@ -444,7 +444,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -463,9 +463,9 @@ describe("getProjectMetadata", () => {
 
         it("handles unknown imported types", () => {
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             import { MyInterface } from "./other";
-            
+
             interface TestActivityInputs {
                 input1: MyInterface;
             }
@@ -473,7 +473,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -499,9 +499,9 @@ describe("getProjectMetadata", () => {
             );
 
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             import { MyInterface } from "../MyInterface";
-            
+
             interface TestActivityInputs {
                 input1: MyInterface;
             }
@@ -509,7 +509,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -550,9 +550,9 @@ describe("getProjectMetadata", () => {
             );
 
             const activitySource = `
-            import { IActivityHandler } from "@geocortex/workflow/IActivityHandler";
+            import { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
             import { MyInterface } from "../MyInterface";
-            
+
             interface TestActivityInputs {
                 input1: MyInterface;
             }
@@ -560,7 +560,7 @@ describe("getProjectMetadata", () => {
             export class TestActivity implements IActivityHandler {
                 static readonly action = "fake-action";
                 static readonly suite = "fake-suite";
-            
+
                 execute(inputs: TestActivityInputs): TestActivityOutputs {
                     return {};
                 }
@@ -589,19 +589,19 @@ describe("getProjectMetadata", () => {
     describe("elements", () => {
         it("passes basic sanity", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
             import React from "react";
-            
+
             interface Props extends FormElementProps<string> {
-                /** 
+                /**
                  * Input1Comment
                  * @clientOnly
                  * @defaultExpressionHint Input1DefaultExpressionHint
                  * @defaultValue Input1DefaultValue
                  * @deprecated Input1Deprecated
-                 * @description Input1Description 
+                 * @description Input1Description
                  * @displayName Input1DisplayName
-                 * @helpUrl http://help/Activity/Input1 
+                 * @helpUrl http://help/Activity/Input1
                  * @hidden
                  * @onlineOnly
                  * @placeholder Input1Placeholder
@@ -612,55 +612,55 @@ describe("getProjectMetadata", () => {
 
                 input2: number;
             }
-            
-            /** 
-             * ElementComment 
+
+            /**
+             * ElementComment
              * @category ElementCategory
              * @defaultName ElementDefaultName
              * @deprecated ElementDeprecated
-             * @description ElementDescription 
-             * @displayName ElementDisplayName 
+             * @description ElementDescription
+             * @displayName ElementDisplayName
              * @helpUrl http://help/TestElement
              * @unsupportedApps wab
              */
             const Foo = (props: Props) => null;
-            
+
             export const fooRegistration: FormElementRegistration<Props> = {
                 component: Foo,
                 id: "foo",
             };
 
-            /** 
-             * ElementComment 
+            /**
+             * ElementComment
              * @category ElementCategory
              * @defaultName ElementDefaultName
              * @deprecated ElementDeprecated
-             * @description ElementDescription 
-             * @displayName ElementDisplayName 
+             * @description ElementDescription
+             * @displayName ElementDisplayName
              * @helpUrl http://help/TestElement
              * @unsupportedApps wab
              */
             function Bar(props: Props) { return null; };
-            
+
             export const barRegistration: FormElementRegistration<Props> = {
                 component: Bar,
                 id: "bar",
             };
 
-            /** 
-             * ElementComment 
+            /**
+             * ElementComment
              * @category ElementCategory
              * @defaultName ElementDefaultName
              * @deprecated ElementDeprecated
-             * @description ElementDescription 
-             * @displayName ElementDisplayName 
+             * @description ElementDescription
+             * @displayName ElementDisplayName
              * @helpUrl http://help/TestElement
              * @unsupportedApps wab
              */
             class Baz extends React.Component<Props> {
-                render() { return null; } 
+                render() { return null; }
             };
-            
+
             export const bazRegistration: FormElementRegistration<Props> = {
                 component: Baz,
                 id: "baz",
@@ -677,27 +677,27 @@ describe("getProjectMetadata", () => {
 
         it("includes elements with basic props interface", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
             import React from "react";
-            
+
             interface Props extends FormElementProps<string> {}
-            
+
             const Foo = (props: Props) => null;
-            
+
             export const fooRegistration: FormElementRegistration<Props> = {
                 component: Foo,
                 id: "foo",
             };
-            
+
             const Bar = (props: FormElementProps) => null;
-            
+
             export const barRegistration: FormElementRegistration = {
                 component: Bar,
                 id: "bar",
             };
-            
+
             const Baz = () => null;
-            
+
             export const bazRegistration: FormElementRegistration = {
                 component: Baz,
                 id: "baz",
@@ -718,10 +718,10 @@ describe("getProjectMetadata", () => {
 
         it("throws error for invalid `component` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
 
             const Foo = 42;
-            
+
             export const fooRegistration: FormElementRegistration = {
                 component: Foo,
                 id: "foo"
@@ -740,12 +740,12 @@ describe("getProjectMetadata", () => {
 
         it("throws error for shorthand `id` expression", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
 
             const Foo = () => null;
 
             const id = "foo";
-            
+
             export const fooRegistration: FormElementRegistration = {
                 component: Foo,
                 id
@@ -764,10 +764,10 @@ describe("getProjectMetadata", () => {
 
         it("throws error for incorrect type of `id` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@geocortex/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
 
             const Foo = () => null;
-            
+
             export const fooRegistration: FormElementRegistration = {
                 component: Foo,
                 id: 42

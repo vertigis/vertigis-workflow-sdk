@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     FormElementProps,
     FormElementRegistration,
-} from "@geocortex/workflow/runtime";
+} from "@vertigis/workflow/runtime";
 
 /**
  * The generic type argument provided to `FormElementProps<T>` controls the type

@@ -54,9 +54,9 @@
         "yargs": "^16.2.0"
     },
     "devDependencies": {
-        "@geocortex/workflow": "^5.21.0",
         "@types/jest": "^26.0.24",
         "@types/node": "^16.11.32",
+        "@vertigis/workflow": "^5.31.0",
         "conventional-changelog-conventionalcommits": "^4.5.0",
         "cross-env": "^7.0.3",
         "execa": "^5.0.0",

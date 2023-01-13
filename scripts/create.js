@@ -101,7 +101,7 @@ const installNpmDeps = (rootPath) => {
                 "install",
                 "--save-dev",
                 "--save-exact",
-                "@geocortex/workflow",
+                "@vertigis/workflow",
                 process.env.SDK_LOCAL_DEV === "true"
                     ? process.cwd()
                     : `@vertigis/workflow-sdk@${selfVersion}`,

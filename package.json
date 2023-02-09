@@ -4,14 +4,14 @@
     "description": "The SDK for extending VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/geocortex/vertigis-workflow-sdk.git"
+        "url": "git+https://github.com/vertigis/vertigis-workflow-sdk.git"
     },
     "author": "VertiGIS",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/geocortex/vertigis-workflow-sdk/issues"
+        "url": "https://github.com/vertigis/vertigis-workflow-sdk/issues"
     },
-    "homepage": "https://github.com/geocortex/vertigis-workflow-sdk#readme",
+    "homepage": "https://github.com/vertigis/vertigis-workflow-sdk#readme",
     "files": [
         "bin",
         "config",

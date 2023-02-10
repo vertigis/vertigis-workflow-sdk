@@ -33,7 +33,7 @@ module.exports = {
         /^esri\/.+$/,
         /^@arcgis\/.+$/,
         /^@geocortex\/.+$/,
-        /^@vertigis\/.+$/,
+        /^@vertigis\/(?!reporting-client).+$/,
         "react",
         "react-dom",
     ],

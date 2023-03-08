@@ -18,7 +18,7 @@ This SDK makes it easy to create custom activity packs for [VertiGIS Studio Work
 To create a project called _activity-pack_ run this command:
 
 ```sh
-npx @vertigis/workflow-sdk create activity-pack
+npx @vertigis/workflow-sdk@latest create activity-pack
 ```
 
 This will bootstrap a new project in the specified directory to quickly get you up and running with the VertiGIS Studio Workflow SDK. Before you can use your activity pack in the [VertiGIS Studio Workflow Designer](https://apps.vertigisstudio.com/workflow/designer/), you will need to [register the activity pack](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview#register-the-activity-pack).

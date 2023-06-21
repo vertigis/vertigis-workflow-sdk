@@ -589,7 +589,7 @@ describe("getProjectMetadata", () => {
     describe("elements", () => {
         it("passes basic sanity", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow";
             import React from "react";
 
             interface Props extends FormElementProps<string> {
@@ -677,7 +677,7 @@ describe("getProjectMetadata", () => {
 
         it("includes elements with basic props interface", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow";
             import React from "react";
 
             interface Props extends FormElementProps<string> {}
@@ -718,7 +718,7 @@ describe("getProjectMetadata", () => {
 
         it("throws error for invalid `component` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow";
 
             const Foo = 42;
 
@@ -740,7 +740,7 @@ describe("getProjectMetadata", () => {
 
         it("throws error for shorthand `id` expression", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow";
 
             const Foo = () => null;
 
@@ -764,7 +764,7 @@ describe("getProjectMetadata", () => {
 
         it("throws error for incorrect type of `id` value", () => {
             const activitySource = `
-            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow/runtime";
+            import { FormElementProps, FormElementRegistration } from "@vertigis/workflow";
 
             const Foo = () => null;
 

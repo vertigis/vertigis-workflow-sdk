@@ -55,7 +55,7 @@
     },
     "devDependencies": {
         "@types/jest": "^26.0.24",
-        "@types/node": "^16.11.32",
+        "@types/node": "^18.16.19",
         "@vertigis/workflow": "^5.33.1",
         "conventional-changelog-conventionalcommits": "^4.5.0",
         "cross-env": "^7.0.3",

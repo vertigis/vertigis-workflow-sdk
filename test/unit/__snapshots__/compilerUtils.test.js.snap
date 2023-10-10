@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getProjectMetadata activities passes basic sanity 1`] = `
-Array [
-  Object {
+[
+  {
     "action": "fake-action",
     "category": "ActivityCategory",
     "clientOnly": true,
@@ -11,8 +11,8 @@ Array [
     "description": "ActivityDescription",
     "displayName": "ActivityDisplayName",
     "helpUrl": "http://help/TestActivity",
-    "inputs": Object {
-      "input1": Object {
+    "inputs": {
+      "input1": {
         "clientOnly": true,
         "defaultExpressionHint": "Input1DefaultExpressionHint",
         "defaultValue": "Input1DefaultValue",
@@ -26,13 +26,13 @@ Array [
         "onlineOnly": true,
         "placeholder": "Input1Placeholder",
         "serverOnly": undefined,
-        "supportedApps": Array [
+        "supportedApps": [
           "gvh",
         ],
         "typeName": "string",
         "unsupportedApps": undefined,
       },
-      "input2": Object {
+      "input2": {
         "clientOnly": undefined,
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
@@ -53,8 +53,8 @@ Array [
     },
     "isHidden": true,
     "onlineOnly": true,
-    "outputs": Object {
-      "output1": Object {
+    "outputs": {
+      "output1": {
         "clientOnly": true,
         "defaultExpressionHint": "Output1DefaultExpressionHint",
         "defaultValue": "Output1DefaultValue",
@@ -68,13 +68,13 @@ Array [
         "onlineOnly": true,
         "placeholder": "Output1Placeholder",
         "serverOnly": undefined,
-        "supportedApps": Array [
+        "supportedApps": [
           "gxw",
         ],
         "typeName": "string",
         "unsupportedApps": undefined,
       },
-      "output2": Object {
+      "output2": {
         "clientOnly": undefined,
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
@@ -95,7 +95,7 @@ Array [
     },
     "serverOnly": undefined,
     "suite": "fake-suite",
-    "supportedApps": Array [
+    "supportedApps": [
       "gvh",
       "gxw",
     ],
@@ -105,15 +105,15 @@ Array [
 `;
 
 exports[`getProjectMetadata elements passes basic sanity 1`] = `
-Array [
-  Object {
+[
+  {
     "deprecated": "ElementDeprecated",
     "description": "ElementDescription",
     "displayName": "ElementDisplayName",
     "helpUrl": "http://help/TestElement",
     "id": "foo",
-    "inputs": Object {
-      "input1": Object {
+    "inputs": {
+      "input1": {
         "clientOnly": true,
         "defaultExpressionHint": "Input1DefaultExpressionHint",
         "defaultValue": "Input1DefaultValue",
@@ -129,11 +129,11 @@ Array [
         "serverOnly": undefined,
         "supportedApps": undefined,
         "typeName": "string",
-        "unsupportedApps": Array [
+        "unsupportedApps": [
           "wab",
         ],
       },
-      "input2": Object {
+      "input2": {
         "clientOnly": undefined,
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
@@ -154,18 +154,18 @@ Array [
     },
     "suite": "uuid:proj-id-123",
     "supportedApps": undefined,
-    "unsupportedApps": Array [
+    "unsupportedApps": [
       "wab",
     ],
   },
-  Object {
+  {
     "deprecated": "ElementDeprecated",
     "description": "ElementDescription",
     "displayName": "ElementDisplayName",
     "helpUrl": "http://help/TestElement",
     "id": "bar",
-    "inputs": Object {
-      "input1": Object {
+    "inputs": {
+      "input1": {
         "clientOnly": true,
         "defaultExpressionHint": "Input1DefaultExpressionHint",
         "defaultValue": "Input1DefaultValue",
@@ -181,11 +181,11 @@ Array [
         "serverOnly": undefined,
         "supportedApps": undefined,
         "typeName": "string",
-        "unsupportedApps": Array [
+        "unsupportedApps": [
           "wab",
         ],
       },
-      "input2": Object {
+      "input2": {
         "clientOnly": undefined,
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
@@ -206,18 +206,18 @@ Array [
     },
     "suite": "uuid:proj-id-123",
     "supportedApps": undefined,
-    "unsupportedApps": Array [
+    "unsupportedApps": [
       "wab",
     ],
   },
-  Object {
+  {
     "deprecated": "ElementDeprecated",
     "description": "ElementDescription",
     "displayName": "ElementDisplayName",
     "helpUrl": "http://help/TestElement",
     "id": "baz",
-    "inputs": Object {
-      "input1": Object {
+    "inputs": {
+      "input1": {
         "clientOnly": true,
         "defaultExpressionHint": "Input1DefaultExpressionHint",
         "defaultValue": "Input1DefaultValue",
@@ -233,11 +233,11 @@ Array [
         "serverOnly": undefined,
         "supportedApps": undefined,
         "typeName": "string",
-        "unsupportedApps": Array [
+        "unsupportedApps": [
           "wab",
         ],
       },
-      "input2": Object {
+      "input2": {
         "clientOnly": undefined,
         "defaultExpressionHint": undefined,
         "defaultValue": undefined,
@@ -258,7 +258,7 @@ Array [
     },
     "suite": "uuid:proj-id-123",
     "supportedApps": undefined,
-    "unsupportedApps": Array [
+    "unsupportedApps": [
       "wab",
     ],
   },

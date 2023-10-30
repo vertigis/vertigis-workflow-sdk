@@ -5,6 +5,7 @@
         "main",
         "next",
         "next-major",
+        { "name": "node-20", "prerelease": true },
         { "name": "beta", "prerelease": true },
         { "name": "alpha", "prerelease": true }
     ]

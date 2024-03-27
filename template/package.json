@@ -12,7 +12,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "typescript": "^4.0.2"
+        "typescript": "^5.4.3"
     },
     "browserslist": [
         "last 2 chrome versions",

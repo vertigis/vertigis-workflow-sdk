@@ -15,7 +15,6 @@
         "sourceMap": true,
         "skipLibCheck": true,
         "strict": true,
-        "stripInternal": true,
-        "suppressImplicitAnyIndexErrors": true
+        "stripInternal": true
     }
 }

@@ -5,7 +5,6 @@ const chalk = require("chalk");
 const spawn = require("cross-spawn");
 const fs = require("fs-extra");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
 
 const rootDir = path.join(__dirname, "..");
 const directoryName = process.argv[3];
@@ -70,7 +69,7 @@ const copyTemplate = (rootPath) => {
 };
 
 const updateTemplateContent = (rootPath) => {
-    const uuid = uuidv4();
+    const uuid = crypto.randomUUID();
 
     const filesToUpdate = [path.join(rootPath, "uuid.js")];
 

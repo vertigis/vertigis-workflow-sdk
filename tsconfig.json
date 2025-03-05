@@ -1,9 +1,14 @@
 {
-    "extends": "./config/tsconfig.json",
     "compilerOptions": {
         "allowJs": true,
-        "checkJs": true,
-        "noEmit": true
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "outDir": "bogus",
+        "target": "ESNext"
     },
-    "include": ["config/**/*", "lib/**/*", "test/**/*"]
+    "include": [".eslintrc.cjs", "**/.eslintrc.js", "bin", "config", "lib", "scripts", "test", "template/src/*.ts"]
 }

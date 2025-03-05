@@ -1,7 +1,7 @@
 {
     "extends": "@vertigis/workflow-sdk/config/tsconfig.json",
     "compilerOptions": {
-        "target": "es2018"
+        "target": "es2018",
     },
-    "include": ["src"]
+    "include": [".eslintrc.js", "src"],
 }

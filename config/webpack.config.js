@@ -1,11 +1,14 @@
 // @ts-check
 "use strict";
 
-const paths = require("./paths");
-const webpack = require("webpack");
+import * as crypto from "crypto";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import path from "path";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
 
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const GenerateActivityMetadataPlugin = require("../lib/GenerateActivityMetadataPlugin");
+import paths from "./paths.js";
+import GenerateActivityMetadataPlugin from "../lib/GenerateActivityMetadataPlugin.js";
 
 const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
@@ -13,9 +16,13 @@ const isEnvProduction = process.env.NODE_ENV === "production";
 // Generate random identifier to ensure uniqueness in the application. This is
 // especially important to avoid collisions when multiple webpack runtimes are
 // in the same document, such as Web's runtime and this library's runtime.
-const libId = require("crypto").randomBytes(8).toString("hex");
+const libId = crypto.randomBytes(8).toString("hex");
+const dirName = path.dirname(fileURLToPath(import.meta.url));
 
-module.exports = {
+/**
+ * @type { webpack.Configuration }
+ */
+export default {
     mode: isEnvProduction ? "production" : "development",
     context: paths.projRoot,
     devtool: isEnvProduction ? false : "eval-source-map",
@@ -25,8 +32,6 @@ module.exports = {
     resolve: {
         extensions: paths.moduleFileExtensions,
     },
-    // Remove this to reduce bundle size when we drop IE11 support.
-    target: ["web", "es5"],
     entry: paths.projEntry,
     externals: [
         /^dojo\/.+$/,
@@ -60,7 +65,7 @@ module.exports = {
                     // in our case) as data URLs.
                     {
                         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-                        loader: require.resolve("url-loader"),
+                        loader: "url-loader",
                         options: {
                             esModule: true,
                         },
@@ -70,8 +75,12 @@ module.exports = {
                     {
                         test: /\.(js|jsx|ts|tsx)$/i,
                         include: paths.projSrc,
-                        loader: require.resolve("ts-loader"),
+                        loader: "ts-loader",
                         options: {
+                            // Needed by e2e tests.
+                            compilerOptions: {
+                                noEmit: false,
+                            },
                             context: paths.projRoot,
                         },
                     },
@@ -80,13 +89,13 @@ module.exports = {
                         sideEffects: true,
                         use: [
                             {
-                                loader: require.resolve("style-loader"),
+                                loader: "style-loader",
                                 options: {
                                     esModule: true,
                                 },
                             },
                             {
-                                loader: require.resolve("css-loader"),
+                                loader: "css-loader",
                                 options: {
                                     // How many loaders before "css-loader" should be applied to "@import"ed resources
                                     importLoaders: 1,
@@ -95,7 +104,7 @@ module.exports = {
                             {
                                 // Adds vendor prefixing based on your specified browser support in
                                 // package.json
-                                loader: require.resolve("postcss-loader"),
+                                loader: "postcss-loader",
                                 options: {
                                     postcssOptions: {
                                         plugins: ["postcss-preset-env"],
@@ -109,7 +118,7 @@ module.exports = {
             {
                 test: /\.(js|jsx|ts|tsx)$/i,
                 include: paths.projSrc,
-                loader: require.resolve("../lib/activityLoader"),
+                loader: path.join(dirName, "../lib/activityLoader.js"),
             },
         ],
     },

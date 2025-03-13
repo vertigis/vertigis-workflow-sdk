@@ -1,27 +1,32 @@
 // @ts-check
 "use strict";
 
-const chalk = require("chalk");
-const spawn = require("cross-spawn");
-const fs = require("fs-extra");
-const path = require("path");
+import chalk from "chalk";
+import * as spawn from "cross-spawn";
+import * as fs from "fs";
+import fsExtra from "fs-extra";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
-const rootDir = path.join(__dirname, "..");
-const directoryName = process.argv[3];
+const { copySync, moveSync } = fsExtra;
+const dirName = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.join(dirName, "..");
+const createIndex = process.argv.findIndex(s => s.includes("create"));
+const directoryName = process.argv[createIndex + 1];
 const directoryPath = path.resolve(directoryName);
 
-const checkSpawnSyncResult = (syncResult) => {
+const checkSpawnSyncResult = syncResult => {
     if (syncResult.status !== 0) {
         process.exit(1);
     }
 };
 
-const checkDirectoryPath = (rootPath) => {
-    if (!/^[\w-]+$/.test(path.basename(rootPath))) {
+const checkDirectoryPath = projectPath => {
+    if (!/^[\w-]+$/.test(path.basename(projectPath))) {
         console.error(
             chalk.red(
                 `Cannot create new project at ${chalk.green(
-                    rootPath
+                    projectPath
                 )} as the directory name is not valid. Letters, numbers, dashes and underscores are allowed.\n`
             )
         );
@@ -30,48 +35,49 @@ const checkDirectoryPath = (rootPath) => {
 
     // Exclamation points are not permitted in the path as it's reserved for
     // webpack loader syntax.
-    if (/[!]/.test(rootPath)) {
+    if (/[!]/.test(projectPath)) {
         console.error(
             chalk.red(
                 `Cannot create new project at ${chalk.green(
-                    rootPath
+                    projectPath
                 )} as the path is not valid. Exclamation points (!) are not allowed in the file system path.\n`
             )
         );
         process.exit(1);
     }
 
-    if (fs.existsSync(rootPath) && fs.readdirSync(rootPath).length > 0) {
-        console.error(
-            chalk.red(
-                `Cannot create new project at ${chalk.green(
-                    rootPath
-                )} as it already exists.\n`
-            )
-        );
+    if (fs.existsSync(projectPath) && fs.readdirSync(projectPath).length > 0) {
+        console.error(chalk.red(`Cannot create new project at ${chalk.green(projectPath)} as it already exists.\n`));
         process.exit(1);
     }
 };
 
-const copyTemplate = (rootPath) => {
-    console.log(`Creating new project at ${chalk.green(rootPath)}`);
+/**
+ * @param { string } projectPath
+ */
+const copyTemplate = projectPath => {
+    console.log(`Creating new project at ${chalk.green(projectPath)}`);
 
-    fs.copySync(path.join(rootDir, "template"), rootPath, {
+    copySync(path.join(rootDir, "template"), projectPath, {
+        errorOnExist: true,
+        overwrite: false,
+    });
+    copySync(path.join(rootDir, "config/tsconfig.json.template"), path.join(projectPath, "tsconfig.json"), {
         errorOnExist: true,
         overwrite: false,
     });
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
-    fs.moveSync(
-        path.join(rootPath, "gitignore"),
-        path.join(rootPath, ".gitignore")
-    );
+    moveSync(path.join(projectPath, "gitignore"), path.join(projectPath, ".gitignore"));
 };
 
-const updateTemplateContent = (rootPath) => {
+/**
+ * @param { string } projectPath
+ */
+const updateTemplateContent = projectPath => {
     const uuid = crypto.randomUUID();
 
-    const filesToUpdate = [path.join(rootPath, "uuid.js")];
+    const filesToUpdate = [path.join(projectPath, "uuid.js")];
 
     for (const fileToUpdate of filesToUpdate) {
         const contents = fs.readFileSync(fileToUpdate, { encoding: "utf8" });
@@ -80,14 +86,22 @@ const updateTemplateContent = (rootPath) => {
     }
 };
 
-const installNpmDeps = (rootPath) => {
+const installNpmDeps = projectPath => {
     console.log(`Installing packages. This might take a couple of minutes.\n`);
-    const selfVersion = require(path.join(rootDir, "package.json")).version;
+
+    /**
+     * @type { string }
+     */
+    const selfVersion = JSON.parse(
+        fs.readFileSync(path.join(rootDir, "package.json"), {
+            encoding: "utf-8",
+        })
+    ).version;
 
     // First install existing deps.
     checkSpawnSyncResult(
         spawn.sync("npm", ["install"], {
-            cwd: rootPath,
+            cwd: projectPath,
             stdio: "inherit",
         })
     );
@@ -101,31 +115,29 @@ const installNpmDeps = (rootPath) => {
                 "--save-dev",
                 "--save-exact",
                 "@vertigis/workflow",
-                process.env.SDK_LOCAL_DEV === "true"
-                    ? process.cwd()
-                    : `@vertigis/workflow-sdk@${selfVersion}`,
+                process.env.SDK_LOCAL_DEV === "true" ? process.cwd() : `@vertigis/workflow-sdk@${selfVersion}`,
+                process.env.SDK_LOCAL_DEV === "true" ? "ts-loader" : "",
             ],
             {
-                cwd: rootPath,
+                cwd: projectPath,
                 stdio: "inherit",
             }
         )
     );
 };
 
-// Initialize newly cloned directory as a git repo
-const gitInit = (rootPath) => {
-    console.log(`Initializing git in ${rootPath}\n`);
-
-    spawn.sync(`git init`, { cwd: rootPath }).status;
+/**
+ * Initialize newly cloned directory as a git repo
+ *
+ * @param { string } projectPath
+ */
+const gitInit = projectPath => {
+    console.log(`Initializing git in ${projectPath}\n`);
+    spawn.sync(`git init -b main`, { cwd: projectPath }).status;
 };
 
 const printSuccess = () => {
-    console.log(
-        `${chalk.green(
-            "Success!"
-        )} Created ${directoryName} at ${directoryPath}\n`
-    );
+    console.log(`${chalk.green("Success!")} Created ${directoryName} at ${directoryPath}\n`);
     console.log("Inside that directory, you can run several commands:\n");
     console.log(chalk.cyan(`  npm run generate`));
     console.log("    Generate new activities and form elements.\n");
@@ -136,9 +148,7 @@ const printSuccess = () => {
     console.log("We suggest that you begin by typing:\n");
     console.log(chalk.cyan(`  cd ${directoryName}`));
     console.log(chalk.cyan("  npm start\n"));
-    console.log(
-        "You can learn more by visiting https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/"
-    );
+    console.log("You can learn more by visiting https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/");
 };
 
 checkDirectoryPath(directoryPath);

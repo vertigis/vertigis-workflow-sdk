@@ -1,28 +1,33 @@
 // @ts-check
 "use strict";
 
-// Do this as the first thing so that any code reading it knows the right env.
+import webpack from "webpack";
+import WebpackDevServer from "webpack-dev-server";
+import paths from "../config/paths.js";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+
+// These needs to be set prior to importing the webpack config. The only way to
+// do that with ES modules is by using a dynamic import.
 process.env.BABEL_ENV = "development";
 process.env.NODE_ENV = "development";
+const { default: webpackConfig } = await import("../config/webpack.config.js");
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on("unhandledRejection", (err) => {
+process.on("unhandledRejection", err => {
     throw err;
 });
-
-const webpack = require("webpack");
-const WebpackDevServer = require("webpack-dev-server");
-const webpackConfig = require("../config/webpack.config");
-const yargs = require("yargs");
-const { hideBin } = require("yargs/helpers");
 
 const argv = yargs(hideBin(process.argv)).argv;
 
 const port = process.env.PORT || 5000;
 
 const compiler = webpack(webpackConfig);
+/**
+ * @type { WebpackDevServer.Configuration }
+ */
 const serverConfig = {
     client: {
         logging: "none",
@@ -35,9 +40,9 @@ const serverConfig = {
     server: {
         type: "https",
         options: {
-            key: argv.key,
-            cert: argv.cert,
-            ca: argv.ca,
+            key: argv["key"],
+            cert: argv["cert"],
+            ca: argv["ca"],
         },
     },
     host: "localhost",
@@ -59,13 +64,13 @@ const serverConfig = {
 };
 
 const devServer = new WebpackDevServer(serverConfig, compiler);
-devServer.startCallback((err) => {
+devServer.startCallback(err => {
     if (err) {
         throw err;
     }
 });
 
-["SIGINT", "SIGTERM"].forEach((signal) => {
+["SIGINT", "SIGTERM"].forEach(signal => {
     process.on(signal, () => {
         devServer.stopCallback(() => {
             process.exit();

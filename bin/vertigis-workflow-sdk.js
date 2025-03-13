@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 // @ts-check
-"use strict";
+// Necessary to turn this into a module, which allows top-level await.
+export {};
 
 const args = process.argv.slice(2);
 
-const scriptIndex = args.findIndex(
-    (x) => x === "build" || x === "create" || x === "generate" || x === "start"
-);
+const scriptIndex = args.findIndex(x => x === "build" || x === "create" || x === "generate" || x === "start");
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 
 if (["build", "create", "generate", "start"].includes(script)) {
-    require(`../scripts/${script}`);
+    try {
+        await import(`../scripts/${script}.js`);
+    } catch (e) {
+        console.error(e);
+    }
 } else {
-    console.log('Unknown script "' + script + '".');
+    console.error(`Unknown script '${script}'.`);
 }

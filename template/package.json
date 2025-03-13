@@ -8,11 +8,13 @@
     "scripts": {
         "build": "vertigis-workflow-sdk build",
         "generate": "vertigis-workflow-sdk generate",
-        "start": "vertigis-workflow-sdk start"
+        "start": "vertigis-workflow-sdk start",
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependencies": {},
     "devDependencies": {
-        "typescript": "^5.4.3"
+        "typescript": "^5.4.3",
+        "prettier": "^3.3.1"
     },
     "browserslist": [
         "last 2 chrome versions",

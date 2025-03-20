@@ -9,7 +9,7 @@ module.exports = {
         project: "./tsconfig.json",
         sourceType: "module",
     },
-    plugins: ["@typescript-eslint", "only-warn", "react", "react-hooks"],
+    plugins: ["@typescript-eslint", "react", "react-hooks"],
     env: {
         browser: true,
         commonjs: true,

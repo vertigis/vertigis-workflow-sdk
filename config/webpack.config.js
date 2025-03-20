@@ -10,7 +10,6 @@ import webpack from "webpack";
 import paths from "./paths.js";
 import GenerateActivityMetadataPlugin from "../lib/GenerateActivityMetadataPlugin.js";
 
-const isEnvDevelopment = process.env.NODE_ENV === "development";
 const isEnvProduction = process.env.NODE_ENV === "production";
 
 // Generate random identifier to ensure uniqueness in the application. This is
@@ -55,7 +54,11 @@ export default {
         filename: "[name].js",
     },
     module: {
-        strictExportPresence: true,
+        parser: {
+            javascript: {
+                exportsPresence: "error",
+            },
+        },
         rules: [
             {
                 // "oneOf" will traverse all following loaders until one will

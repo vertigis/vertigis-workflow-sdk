@@ -11,7 +11,10 @@
         "start": "vertigis-workflow-sdk start",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
-    "dependencies": {},
+    "dependencies": {
+        "react": "^18.3.0",
+        "react-dom": "^18.3.0"
+    },
     "devDependencies": {
         "typescript": "^5.4.3",
         "prettier": "^3.3.1"

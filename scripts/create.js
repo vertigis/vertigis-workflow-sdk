@@ -106,6 +106,14 @@ const installNpmDeps = projectPath => {
         })
     );
 
+    // Install React 18 first to match @vertigis/workflow peer dependencies.
+    checkSpawnSyncResult(
+        spawn.sync("npm", ["install", "--save", "react@^18.3.0", "react-dom@^18.3.0"], {
+            cwd: projectPath,
+            stdio: "inherit",
+        })
+    );
+
     // Add SDK package.
     checkSpawnSyncResult(
         spawn.sync(

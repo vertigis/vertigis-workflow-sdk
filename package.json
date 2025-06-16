@@ -54,8 +54,8 @@
         "ts-loader": "~9.5.1",
         "ts-morph": "~9.1.0",
         "url-loader": "~4.1.1",
-        "webpack": "~5.94t.0",
-        "webpack-dev-server": "~5.1.0",
+        "webpack": "~5.94.0",
+        "webpack-dev-server": "~5.2.0",
         "yargs": "~17.7.2"
     },
     "devDependencies": {
@@ -64,7 +64,7 @@
         "@babel/preset-typescript": "7.26.0",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.30",
-        "@vertigis/workflow": "^5.43.0",
+        "@vertigis/workflow": "^5.45.1",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "cross-env": "^7.0.3",
         "execa": "^9.0.0",

@@ -16,6 +16,12 @@
         "typescript": "^5.4.3",
         "prettier": "^3.3.1"
     },
+    "overrides": {
+        "@vertigis/react-ui": {
+            "react": ">=18 <19",
+            "react-dom": ">=18 <19"
+        }
+    },
     "browserslist": [
         "last 2 chrome versions",
         "last 2 edge versions",

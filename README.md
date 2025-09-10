@@ -7,11 +7,11 @@ This SDK makes it easy to create custom activity packs for [VertiGIS Studio Work
 
 ## Requirements
 
--   The latest LTS version of [Node.js](https://nodejs.org/en/download/)
--   A code editor of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/)
--   A viewer using VertiGIS Studio Workflow 5.31 or later ([VertiGIS Product Installer Downloads](https://apps.vertigisstudio.com/downloads))
-    -   VertiGIS Studio Web 5.22 or later
-    -   Workflow 5.31 widget for ArcGIS Experience Builder or later
+- The latest LTS version of [Node.js](https://nodejs.org/en/download/)
+- A code editor of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/)
+- A viewer using VertiGIS Studio Workflow 5.31 or later ([VertiGIS Product Installer Downloads](https://apps.vertigisstudio.com/downloads))
+    - VertiGIS Studio Web 5.22 or later
+    - Workflow 5.31 widget for ArcGIS Experience Builder or later
 
 ## Creating a new project
 
@@ -34,6 +34,16 @@ Interactively generate a new activity or form element.
 ### `npm start`
 
 Runs the project in development mode. Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js). The HTTPS certificate of the development server is a self-signed certificate that web browsers will warn about. To work around this open [`https://localhost:5000/main.js`](https://localhost:5000/main.js) in a web browser and allow the invalid certificate as an exception. For creating a locally-trusted HTTPS certificate see the [Configuring a HTTPS Certificate](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate) section on the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/).
+
+By default all hosts are allowed. To change this, add one or more `--allowed-hosts` parameters to the command, like so:
+
+```sh
+npm start -- --allowed-hosts host1 --allowed-hosts host2
+```
+
+NOTE: It is important to include the separate `--` before the list of parameters.
+
+For additional information on how this parameter is used, refer to the webpack-dev-server documentation for [devServer.allowedHosts](https://github.com/webpack/webpack-dev-server/blob/master/DOCUMENTATION-v4.md#devserverallowedhosts).
 
 ### `npm run build`
 

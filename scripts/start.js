@@ -29,6 +29,7 @@ const compiler = webpack(webpackConfig);
  * @type { WebpackDevServer.Configuration }
  */
 const serverConfig = {
+    allowedHosts: argv["allowed-hosts"] ?? "all",
     client: {
         logging: "none",
     },
@@ -36,7 +37,13 @@ const serverConfig = {
     headers: {
         "Access-Control-Allow-Origin": "*",
     },
+    host: "localhost",
     hot: false,
+    open: process.env.SMOKE_TEST !== "true" &&
+        process.env.OPEN_BROWSER !== "false" && {
+            target: ["main.js"],
+        },
+    port,
     server: {
         type: "https",
         options: {
@@ -45,12 +52,6 @@ const serverConfig = {
             ca: argv["ca"],
         },
     },
-    host: "localhost",
-    open: process.env.SMOKE_TEST !== "true" &&
-        process.env.OPEN_BROWSER !== "false" && {
-            target: ["main.js"],
-        },
-    port,
     static: {
         publicPath: "/",
         watch: {
@@ -60,7 +61,6 @@ const serverConfig = {
             ignored: [/node_modules/],
         },
     },
-    //stats: "minimal",
 };
 
 const devServer = new WebpackDevServer(serverConfig, compiler);

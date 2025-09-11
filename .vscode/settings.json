@@ -3,6 +3,9 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
+    "files.exclude": {
+        "node_modules": true
+    },
     "[javascript]": {
         "editor.formatOnSave": true
     },

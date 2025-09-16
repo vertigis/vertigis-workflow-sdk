@@ -37,7 +37,7 @@ const serverConfig = {
     headers: {
         "Access-Control-Allow-Origin": "*",
     },
-    host: "localhost",
+    host: argv["host"] ?? "localhost",
     hot: false,
     open: process.env.SMOKE_TEST !== "true" &&
         process.env.OPEN_BROWSER !== "false" && {

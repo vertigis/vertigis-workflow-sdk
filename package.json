@@ -54,8 +54,8 @@
         "ts-loader": "~9.5.1",
         "ts-morph": "~9.1.0",
         "url-loader": "~4.1.1",
-        "webpack": "~5.94.0",
-        "webpack-dev-server": "~5.2.0",
+        "webpack": "~5.101.3",
+        "webpack-dev-server": "~5.2.2",
         "yargs": "~17.7.2"
     },
     "devDependencies": {

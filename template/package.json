@@ -5,10 +5,12 @@
     "description": "",
     "license": "UNLICENSED",
     "author": "",
+    "type": "module",
     "scripts": {
         "build": "vertigis-workflow-sdk build",
         "generate": "vertigis-workflow-sdk generate",
         "start": "vertigis-workflow-sdk start",
+        "lint": "eslint --ext .ts,.tsx",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.ts\" \"**/*.tsx\""
     },
     "dependencies": {},

@@ -25,7 +25,7 @@ let subprocess;
 
 /** @returns {Promise<string>} */
 async function getProjectUuid() {
-    return (await import(pathToFileURL(path.join(testLibProjPath, "uuid.js")).href)).default;
+    return (await import(pathToFileURL(path.join(testLibProjPath, "uuid.cjs")).href)).default;
 }
 
 /**

@@ -27,4 +27,5 @@ process.on("unhandledRejection", err => {
     throw err;
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 sdkStart(webpackConfig, "workflow");

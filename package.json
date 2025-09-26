@@ -28,7 +28,7 @@
         "vertigis-workflow-sdk": "bin/vertigis-workflow-sdk.js"
     },
     "scripts": {
-        "create": "npm pack && cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
+        "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
         "test": "npm run test:unit && npm run test:e2e",
         "test:e2e": "node ./test/e2e/index.js",
         "test:unit": "jest",
@@ -47,7 +47,7 @@
         "@babel/preset-typescript": "7.26.0",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.30",
-        "@types/webpack": "^5.28.5",
+        "@types/node-fetch": "^2.6.13",
         "@vertigis/workflow": "^5.46.0",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "cross-env": "^7.0.3",

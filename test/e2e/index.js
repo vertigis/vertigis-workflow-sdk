@@ -50,6 +50,7 @@ function runNpmScript(args, opts) {
 }
 
 function killSubprocess() {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (subprocess && !subprocess.killed) {
         subprocess.kill();
         subprocess = undefined;
@@ -65,6 +66,7 @@ async function testCreateProject() {
     subprocess = runNpmScript(["create", "test-lib"], { reject: false });
     const processResult = await subprocess;
     assert.strictEqual(
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         processResult.stderr
             .toString()
             .includes(`Cannot create new project at ${testLibProjPath} as it already exists`),
@@ -91,7 +93,7 @@ async function testBuildProject() {
 async function testStartProject() {
     subprocess = runNpmScript(["start"], { cwd: testLibProjPath, stdio: "ignore" });
 
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    await new Promise(resolve => setTimeout(resolve, 50000));
 
     // The dev server uses a self signed cert which the `https` module won't allow by default.
     const unsafeAgent = new https.Agent({ rejectUnauthorized: false });
@@ -114,28 +116,28 @@ async function testStartProject() {
 }
 
 async function testGenerate() {
-    const cleanStdoutData = data =>
+    const cleanStdoutData = (/** @type {string} */ data) =>
         data
-            // Remove ansi escape sequences (font styling, etc.)
-            .replace(/\[\w+\s*/gi, "")
-            // Remove any remaining that aren't printable (ansi control sequences)
-            .replace(/[^\w\s\?]/gi, "")
+            // Remove ansi escape sequences.
+            .replace(/\p{C}\[[0-9hlmGK?]+\s*/gu, "")
             .trim();
 
-    const createDataCallback = matches => data => {
-        const cleanData = cleanStdoutData(data);
+    const createDataCallback =
+        (/** @type {{ endsWith: string; write: string; matched?: boolean; }[]} */ matches) =>
+        (/** @type {string} */ data) => {
+            const cleanData = cleanStdoutData(data);
 
-        for (const match of matches) {
-            if (!match.matched && cleanData.endsWith(match.endsWith)) {
-                subprocess.stdin.write(match.write);
-                // Because of the nature of inquirer clearing and reprinting
-                // lines in the console, we can receive data events that end
-                // with the same match. Make sure we only write to stdin once.
-                match.matched = true;
-                return;
+            for (const match of matches) {
+                if (!match.matched && cleanData.endsWith(match.endsWith)) {
+                    subprocess.stdin.write(match.write);
+                    // Because of the nature of inquirer clearing and reprinting
+                    // lines in the console, we can receive data events that end
+                    // with the same match. Make sure we only write to stdin once.
+                    match.matched = true;
+                    return;
+                }
             }
-        }
-    };
+        };
 
     // Test create activity
     console.log("running generate");
@@ -325,6 +327,9 @@ async function testActivityPackMetadataGeneration() {
     });
 }
 
+/**
+ * @param {fs.PathLike} path
+ */
 function rmdir(path) {
     fs.rmSync(path, { recursive: true });
 }
@@ -355,6 +360,6 @@ try {
 
 try {
     cleanup();
-} catch (error) {
+} catch {
     console.error("\n\nFailed to clean up. You may need to remove the 'test-lib' directory manually.\n");
 }

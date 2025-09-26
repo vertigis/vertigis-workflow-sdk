@@ -1,18 +1,14 @@
 // @ts-check
 "use strict";
 
-import path from "path";
 import paths from "@vertigis/sdk-library/config/paths.js";
 import { merge } from "webpack-merge";
 
-import GenerateActivityMetadataPlugin from "../lib/GenerateActivityMetadataPlugin.js";
+import GenerateActivityMetadataPlugin from "@vertigis/sdk-library/lib/GenerateActivityMetadataPlugin.js";
 import baseConfig from "@vertigis/sdk-library/config/webpack.base.config.js";
 
 export { merge };
 
-/**
- * @type { import("webpack").Configuration }
- */
 export default merge(baseConfig, {
     externals: [
         /^dojo\/.+$/,
@@ -36,7 +32,9 @@ export default merge(baseConfig, {
     resolveLoader: {
         modules: [
             "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/node_modules/",
-            "node_modules/@vertigis/workflow-sdk/lib",
+            "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/lib/",
+            "node_modules/@vertigis/sdk-library/node_modules",
+            "node_modules/@vertigis/sdk-library/lib",
             "node_modules",
             "lib",
         ],

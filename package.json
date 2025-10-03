@@ -17,7 +17,8 @@
         "config",
         "lib",
         "scripts",
-        "template"
+        "template",
+        "test"
     ],
     "type": "module",
     "engines": {
@@ -29,10 +30,7 @@
     },
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
-        "test": "npm run test:unit && npm run test:e2e",
-        "test:e2e": "node ./test/e2e/index.js",
-        "test:unit": "jest",
-        "test:unit:watch": "npm run test:unit -- --watch",
+        "test": "node ./test/index.js",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
     },
     "dependencies": {
@@ -42,20 +40,13 @@
         "webpack-merge": "~6.0.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.26.8",
-        "@babel/preset-env": "^7.26.8",
-        "@babel/preset-typescript": "7.26.0",
-        "@types/jest": "^29.5.12",
         "@types/node": "^20.11.30",
-        "@types/node-fetch": "^2.6.13",
         "@vertigis/workflow": "^5.46.0",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "cross-env": "^7.0.3",
         "eslint": "^9.32.0",
+        "eslint-import-resolver-typescript": "~4.2.2",
         "execa": "^9.0.0",
-        "jest": "^30.0.5",
-        "node-fetch": "^2.6.7",
-        "p-retry": "^4.6.2",
         "prettier": "^3.2.5",
         "pretty-quick": "^4.0.0",
         "react": "^18.2.0",

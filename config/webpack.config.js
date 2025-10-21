@@ -4,7 +4,7 @@
 import paths from "@vertigis/sdk-library/config/paths.js";
 import { merge } from "webpack-merge";
 
-import GenerateActivityMetadataPlugin from "@vertigis/sdk-library/lib/GenerateActivityMetadataPlugin.js";
+import GenerateActivityMetadataPlugin from "@vertigis/sdk-library/lib/workflow/GenerateActivityMetadataPlugin.js";
 import baseConfig from "@vertigis/sdk-library/config/webpack.base.config.js";
 
 export { merge };
@@ -31,12 +31,12 @@ export default merge(baseConfig, {
     plugins: [new GenerateActivityMetadataPlugin()],
     resolveLoader: {
         modules: [
-            "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/node_modules/",
-            "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/lib/",
+            "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/node_modules",
+            "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/lib/workflow",
             "node_modules/@vertigis/sdk-library/node_modules",
-            "node_modules/@vertigis/sdk-library/lib",
+            "node_modules/@vertigis/sdk-library/lib/workflow",
             "node_modules",
-            "lib",
+            "lib/workflow",
         ],
     },
 });

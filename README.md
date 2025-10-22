@@ -7,11 +7,11 @@ This SDK makes it easy to create custom activity packs for [VertiGIS Studio Work
 
 ## Requirements
 
--   The latest LTS version of [Node.js](https://nodejs.org/en/download/)
--   A code editor of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/)
--   A viewer using VertiGIS Studio Workflow 5.31 or later ([VertiGIS Product Installer Downloads](https://apps.vertigisstudio.com/downloads))
-    -   VertiGIS Studio Web 5.22 or later
-    -   Workflow 5.31 widget for ArcGIS Experience Builder or later
+- The latest LTS version of [Node.js](https://nodejs.org/en/download/)
+- A code editor of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/)
+- A viewer using VertiGIS Studio Workflow 5.31 or later ([VertiGIS Product Installer Downloads](https://apps.vertigisstudio.com/downloads))
+    - VertiGIS Studio Web 5.22 or later
+    - Workflow 5.31 widget for ArcGIS Experience Builder or later
 
 ## Creating a new project
 
@@ -42,6 +42,14 @@ Builds the activity pack for production to the `build` folder. It optimizes the 
 Your custom activity pack is now ready to be deployed!
 
 See the [section about deployment](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#deployment) in the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/) for more information.
+
+## Upgrading
+
+To update a previously created project to the latest version of the Workflow SDK, navigate to the root directory of that project and run
+
+```sh
+npx @vertigis/workflow-sdk@latest upgrade
+```
 
 ## Documentation
 

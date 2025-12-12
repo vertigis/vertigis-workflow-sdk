@@ -33,6 +33,7 @@ export default merge(baseConfig, {
         modules: [
             "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/node_modules",
             "node_modules/@vertigis/workflow-sdk/node_modules/@vertigis/sdk-library/lib/workflow",
+            "node_modules/@vertigis/workflow-sdk/node_modules",
             "node_modules/@vertigis/sdk-library/node_modules",
             "node_modules/@vertigis/sdk-library/lib/workflow",
             "node_modules",

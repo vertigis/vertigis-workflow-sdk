@@ -33,14 +33,19 @@ Interactively generate a new activity or form element.
 
 ### `npm start`
 
-Runs the project in development mode. By default, Your activity pack will be available at [http://localhost:5000/main.js](http://localhost:5000/main.js). The HTTPS certificate of the development server is a self-signed certificate that web browsers will warn about. To work around this open [`https://localhost:5000/main.js`](https://localhost:5000/main.js) in a web browser and allow the invalid certificate as an exception. For creating a locally-trusted HTTPS certificate see the [Configuring a HTTPS Certificate](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate) section on the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/).
+Runs the project in development mode. By default, Your activity pack will be available at [https://localhost:5000/main.js](https://localhost:5000/main.js). The HTTPS certificate of the development server is a self-signed certificate that web browsers will warn about. To work around this open in a web browser and allow the invalid certificate as an exception. For creating a locally-trusted HTTPS certificate see the [Configuring a HTTPS Certificate](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate) section on the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/).
 
 #### Command Line Arguments
 
-The `start` script supports the following arguments that are passed along to [webpack-dev-server](https://github.com/webpack/webpack-dev-server/tree/main?tab=readme-ov-file).
+The `start` script supports the following optional arguments that are passed along to [webpack-dev-server](https://github.com/webpack/webpack-dev-server/tree/main?tab=readme-ov-file).
 
-- `--host` - Default is `localhost`. [[docs](https://github.com/webpack/webpack-dev-server/blob/main/DOCUMENTATION-v4.md#devserverhost)]
 - `--allowed-hosts` - Default is `all`. [[docs](https://github.com/webpack/webpack-dev-server/blob/main/DOCUMENTATION-v4.md#devserverallowedhosts)]
+- `--host` - Default is `localhost`. [[docs](https://github.com/webpack/webpack-dev-server/blob/main/DOCUMENTATION-v4.md#devserverhost)]
+- `--port` - Default is `5000`. [[docs](https://github.com/webpack/webpack-dev-server/blob/main/DOCUMENTATION-v4.md#devserverport)]
+- `--type` - Server type. Default is `https`. [[docs](https://github.com/webpack/webpack-dev-server/blob/main/DOCUMENTATION-v4.md#devserverserver)]
+- `--key` - Provide a private key in PEM format. [[docs](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate)]
+- `--cert` - Provide a certificate chain in PEM format. [[docs](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate)]
+- `--ca` - Override the trusted CA certificates. [[docs](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#configuring-a-https-certificate)]
 
 NOTE: It is important to add `--` before the list of parameters.
 

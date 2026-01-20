@@ -17,7 +17,8 @@
         "config",
         "lib",
         "scripts",
-        "template"
+        "template",
+        "test"
     ],
     "type": "module",
     "engines": {
@@ -29,58 +30,34 @@
     },
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
-        "test": "npm run test:unit && npm run test:e2e",
-        "test:e2e": "node ./test/e2e/index.js",
-        "test:unit": "jest",
-        "test:unit:watch": "npm run test:unit -- --watch",
+        "test": "node ./test/index.js",
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
     },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "~7.4.0",
-        "@typescript-eslint/parser": "~7.4.0",
+        "@vertigis/sdk-library": "^2.0.3",
         "chalk": "~5.3.0",
-        "clean-webpack-plugin": "~4.0.0",
-        "css-loader": "~7.1.0",
-        "eslint": "~8.57.0",
-        "eslint-config-prettier": "~9.1.0",
-        "eslint-plugin-react": "~7.36.0",
-        "eslint-plugin-react-hooks": "~4.6.0",
-        "fs-extra": "~11.2.0",
-        "inquirer": "~7.3.3",
-        "postcss": "~8.4.38",
-        "postcss-loader": "~8.1.1",
-        "postcss-preset-env": "~9.5.2",
-        "style-loader": "~4.0.0",
-        "ts-loader": "~9.5.1",
-        "ts-morph": "~9.1.0",
-        "url-loader": "~4.1.1",
-        "webpack": "~5.101.3",
-        "webpack-dev-server": "~5.2.2",
-        "yargs": "~17.7.2"
+        "webpack-merge": "~6.0.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.26.8",
-        "@babel/preset-env": "^7.26.8",
-        "@babel/preset-typescript": "7.26.0",
-        "@types/jest": "^29.5.12",
-        "@types/node": "^20.11.30",
-        "@vertigis/workflow": "^5.45.1",
+        "@types/node": "^22.13.14",
+        "@vertigis/workflow": "^5.47.0",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "cross-env": "^7.0.3",
+        "eslint": "^9.32.0",
+        "eslint-import-resolver-typescript": "~4.2.2",
         "execa": "^9.0.0",
-        "husky": "^4.3.6",
-        "jest": "^29.7.0",
-        "node-fetch": "^2.6.7",
-        "p-retry": "^4.6.2",
+        "lint-staged": "^16.2.3",
+        "node-fetch": "^2.7.0",
         "prettier": "^3.2.5",
-        "pretty-quick": "^4.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "simple-git-hooks": "~2.13.0",
         "typescript": "^5.4.3"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
+    "simple-git-hooks": {
+        "pre-commit": "npx lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,json,ts,tsx,md,xml}": "prettier --write"
     }
 }

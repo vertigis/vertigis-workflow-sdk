@@ -1,14 +1,4 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "esModuleInterop": true,
-        "jsx": "react-jsx",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "outDir": "bogus",
-        "target": "ESNext"
-    },
-    "include": [".eslintrc.cjs", "**/.eslintrc.js", "bin", "config", "lib", "scripts", "test", "template/src/*.ts"]
+    "extends": "@vertigis/sdk-library/config/tsconfig.base.json",
+    "include": ["eslint.config.js", "bin", "config", "lib", "scripts", "test", "template/src/*.ts"]
 }

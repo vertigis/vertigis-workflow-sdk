@@ -35,6 +35,14 @@ Your custom activity pack is now ready to be deployed!
 
 See the [section about deployment](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/#deployment) in the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/) for more information.
 
+## Upgrading
+
+To update a previously created project to the latest version of the Workflow SDK, navigate to the root directory of that project and run
+
+```sh
+npx @vertigis/workflow-sdk@latest upgrade
+```
+
 ## Documentation
 
 Find [further documentation on the SDK](https://developers.vertigisstudio.com/docs/workflow/sdk-web-overview/) on the [VertiGIS Studio Developer Center](https://developers.vertigisstudio.com/docs/workflow/overview/).

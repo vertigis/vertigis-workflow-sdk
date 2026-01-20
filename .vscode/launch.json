@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug unit tests",
+            "name": "Debug tests",
             "request": "launch",
-            "runtimeArgs": ["run-script", "test:unit", "--", "--runInBand"],
+            "runtimeArgs": ["run-script", "test", "--", "--runInBand"],
             "runtimeExecutable": "npm",
             "skipFiles": ["<node_internals>/**"],
             "console": "integratedTerminal",

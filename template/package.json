@@ -24,6 +24,10 @@
             "react-dom": ">=18 <19"
         }
     },
+    "allowScripts": {
+        "@mui/x-telemetry": false,
+        "@vaadin/vaadin-usage-statistics": false
+    },
     "browserslist": [
         "last 2 chrome versions",
         "last 2 edge versions",

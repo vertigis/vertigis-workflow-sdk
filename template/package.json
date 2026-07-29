@@ -18,11 +18,9 @@
         "typescript": "^5.4.3",
         "prettier": "^3.3.1"
     },
-    "overrides": {
-        "@vertigis/react-ui": {
-            "react": ">=18 <19",
-            "react-dom": ">=18 <19"
-        }
+    "allowScripts": {
+        "@mui/x-telemetry": false,
+        "@vaadin/vaadin-usage-statistics": false
     },
     "browserslist": [
         "last 2 chrome versions",

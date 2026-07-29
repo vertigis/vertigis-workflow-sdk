@@ -1,4 +1,7 @@
 {
     "extends": "@vertigis/sdk-library/config/tsconfig.base.json",
-    "include": ["eslint.config.js", "bin", "config", "lib", "scripts", "test", "template/src/*.ts"]
+    "include": ["eslint.config.js", "bin", "config", "lib", "scripts", "test", "template/src/*.ts"],
+    "compilerOptions": {
+        "types": ["node"]
+    }
 }

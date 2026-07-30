@@ -7,8 +7,8 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-import libPackage from "../node_modules/@vertigis/sdk-library/package.json" with { type: "json" };
-import webPackage from "../node_modules/@vertigis/workflow/package.json" with { type: "json" };
+import libPackage from "@vertigis/sdk-library/package.json" with { type: "json" };
+import webPackage from "@vertigis/workflow/package.json" with { type: "json" };
 import sdkPackage from "../package.json" with { type: "json" };
 
 // These needs to be set prior to importing the webpack config. The only way to

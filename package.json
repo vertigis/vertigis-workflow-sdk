@@ -34,13 +34,13 @@
         "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
     },
     "dependencies": {
-        "@vertigis/sdk-library": "~2.1.0",
+        "@vertigis/sdk-library": "~2.1.6",
         "chalk": "~5.3.0",
         "webpack-merge": "~6.0.1"
     },
     "devDependencies": {
         "@types/node": "^22.13.14",
-        "@vertigis/workflow": "^5.51.0",
+        "@vertigis/workflow": "^5.53.0",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "cross-env": "^7.0.3",
         "eslint": "^9.32.0",
@@ -49,10 +49,10 @@
         "lint-staged": "^16.2.3",
         "node-fetch": "^2.7.0",
         "prettier": "^3.2.5",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
         "simple-git-hooks": "~2.13.0",
-        "typescript": "^5.4.3"
+        "typescript": "^6.0.3"
     },
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged"
@@ -63,8 +63,8 @@
     "allowScripts": {
         "@mui/x-telemetry": false,
         "@vaadin/vaadin-usage-statistics": false,
-        "playwright-chromium": true,
+        "playwright-chromium": false,
         "simple-git-hooks": false,
-        "unrs-resolver": false
+        "unrs-resolver": true
     }
 }

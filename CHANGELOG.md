@@ -1,5 +1,11 @@
 # Changelog
 
+## [6.1.2] - 2026-10-15
+
+### Changed
+
+- Bump `typescript` from 5 to 6 in new projects
+
 ## [6.1.1] - 2026-07-30
 
 ### Fixed
@@ -11,8 +17,10 @@
 
 ### Added
 
-- Add a banner comment to `build/main.js` with the library ID and the versions of Workflow, the Workflow SDK, and `@vertigis/sdk-library`
-- Add `allowScripts` to `package.json` in new projects to stop the install scripts of `@mui/x-telemetry` and `@vaadin/vaadin-usage-statistics`
+- Add a banner comment to `build/main.js` with the library ID and the versions of Workflow, the Workflow SDK, and
+  `@vertigis/sdk-library`
+- Add `allowScripts` to `package.json` in new projects to stop the install scripts of `@mui/x-telemetry` and
+  `@vaadin/vaadin-usage-statistics`
 
 ### Removed
 
@@ -21,7 +29,8 @@
 
 ## [6.0.0] - 2026-01-20
 
-_To upgrade a project, run `npx @vertigis/workflow-sdk@latest upgrade` in the project folder. Then move your custom ESLint rules from `.eslintrc.js` to `eslint.config.js`._
+_To upgrade a project, run `npx @vertigis/workflow-sdk@latest upgrade` in the project folder. Then move your custom
+ESLint rules from `.eslintrc.js` to `eslint.config.js`._
 
 ### Changed
 
@@ -91,7 +100,8 @@ _To upgrade a project, run `npx @vertigis/workflow-sdk@latest upgrade` in the pr
 
 ### Changed
 
-- **Breaking:** Bump `webpack-dev-server` from 4 to 5 and `postcss-loader` from 7 to 8, which require Node.js 18.12 or later
+- **Breaking:** Bump `webpack-dev-server` from 4 to 5 and `postcss-loader` from 7 to 8, which require Node.js 18.12 or
+  later
 - Bump `typescript` from 4 to 5 in new projects
 - Bump `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` from 6 to 7
 
@@ -99,6 +109,7 @@ _To upgrade a project, run `npx @vertigis/workflow-sdk@latest upgrade` in the pr
 
 - Remove `suppressImplicitAnyIndexErrors` from the TypeScript configuration because TypeScript 5 does not support it
 
+[6.1.2]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.2
 [6.1.1]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.1
 [6.1.0]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.0
 [6.0.0]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.0.0

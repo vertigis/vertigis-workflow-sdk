@@ -23,7 +23,8 @@ activity packs and form elements for VertiGIS Studio Workflow.
   projects.
 - `lib/templates/` contains the activity and form element templates. `generate` copies them into user projects.
 - `semantic-release` releases the package from `main`. The version in `package.json` is a placeholder. Do not change it.
-- A `CHANGELOG.md` file is maintained. Only **user facing** changes are included.
+- A `CHANGELOG.md` file is maintained. Only **user facing** changes are included. Do not record changes from the
+  `@vertigis/sdk-library` dependency.
 
 ## Commands
 

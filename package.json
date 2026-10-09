@@ -31,7 +31,7 @@
     "scripts": {
         "create": "cross-env SDK_LOCAL_DEV=true node bin/vertigis-workflow-sdk.js create",
         "test": "node ./test/index.js",
-        "prettier": "prettier --write \"**/*.json\" \"**/*.js\""
+        "prettier": "prettier --write \"**/*.json\" \"**/*.js\" \"**/*.md\"" 
     },
     "dependencies": {
         "@vertigis/sdk-library": "~2.1.6",

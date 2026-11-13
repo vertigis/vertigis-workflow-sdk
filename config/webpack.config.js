@@ -16,8 +16,8 @@ export default merge(baseConfig, {
         /^@arcgis\/.+$/,
         /^@geocortex\/.+$/,
         /^@vertigis\/(?!reporting-client).+$/,
-        "react",
-        "react-dom",
+        /^react(\/.+)*$/,
+        /^react-dom(\/.+)*$/,
     ],
     module: {
         rules: [

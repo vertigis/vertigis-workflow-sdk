@@ -18,7 +18,8 @@
         "lib",
         "scripts",
         "template",
-        "test"
+        "test",
+        "CHANGELOG.md"
     ],
     "type": "module",
     "engines": {

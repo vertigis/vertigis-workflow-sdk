@@ -1,5 +1,11 @@
 # Changelog
 
+## [6.1.3] - 2026-11-13
+
+### Fixed
+
+- Fix `start` bundling a development React library if React included in the project
+
 ## [6.1.2] - 2026-10-15
 
 ### Changed
@@ -109,6 +115,7 @@ ESLint rules from `.eslintrc.js` to `eslint.config.js`._
 
 - Remove `suppressImplicitAnyIndexErrors` from the TypeScript configuration because TypeScript 5 does not support it
 
+[6.1.3]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.3
 [6.1.2]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.2
 [6.1.1]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.1
 [6.1.0]: https://github.com/vertigis/vertigis-workflow-sdk/releases/tag/v6.1.0
